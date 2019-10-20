@@ -61,7 +61,7 @@ namespace MTGCore.Controllers
 
             var response = await _mtgService.GetCardByID(74208);
 
-            var response2 = await _mtgService.GetCardsByPage(1);
+            //var response2 = await _mtgService.GetCardsByPage(1);
 
             if (response == null)
                 return NotFound();

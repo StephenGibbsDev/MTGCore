@@ -10,7 +10,7 @@ namespace MTGCore.Services
     public class MTGService
     {
         private HttpClient _client;
-        private const string _baseUrl = "https://api.magicthegathering.io/v1/";
+        public string _baseUrl = "https://api.magicthegathering.io/v1/";
 
         public MTGService(HttpClient client)
         {

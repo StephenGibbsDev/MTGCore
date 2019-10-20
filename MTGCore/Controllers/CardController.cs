@@ -13,13 +13,11 @@ namespace MTGCore.Controllers
 {
     public class CardController : Controller
     {
-        private readonly IHttpClientFactory _clientFactory;
         private MTGService _mtgService;
 
 
-        public CardController(IHttpClientFactory clientFactory, MTGService mtgservice)
+        public CardController( MTGService mtgservice)
         {
-            _clientFactory = clientFactory;
             _mtgService = mtgservice;
         }
 

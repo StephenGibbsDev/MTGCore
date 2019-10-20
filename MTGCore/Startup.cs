@@ -12,6 +12,7 @@ using MTGCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MTGCore.Services;
 
 namespace MTGCore
 {
@@ -27,6 +28,7 @@ namespace MTGCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -34,6 +36,7 @@ namespace MTGCore
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddHttpClient<MTGService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

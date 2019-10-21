@@ -14,12 +14,10 @@ namespace MTGCore.Controllers
     {
         private MTGService _mtgService;
 
-
         public CardController( MTGService mtgservice)
         {
             _mtgService = mtgservice;
         }
-
 
         public async Task<ActionResult> Index(int Page)
         {
@@ -47,7 +45,6 @@ namespace MTGCore.Controllers
                     var t1 = JsonConvert.DeserializeObject<RootObject>(EmpResponse).cards;
                     return View(t1);
                 }
-
             }
 
             return NotFound();
@@ -57,7 +54,6 @@ namespace MTGCore.Controllers
         [HttpGet]
         public async Task<ActionResult> Get() 
         {
-
             var response = await _mtgService.GetCardByID(74208);
 
             //var response2 = await _mtgService.GetCardsByPage(1);

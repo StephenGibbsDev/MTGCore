@@ -20,18 +20,35 @@ namespace MTGCore.Controllers
         }
 
         public async Task<ActionResult> Index(int Page)
-            {
+        {
             var response = await _mtgService.GetCardsByPage(Page);
 
             if (response == null)
                 return NotFound();
 
+
+            //replaces whiites with silly txt, maybe use this for mana icons later?
+            response.ForEach(p => { p.manaCost = ReplaceWhites(p.manaCost); });
+
             return View(response);
         }
 
+        public string ReplaceWhites(string thing)
+        {
+
+            if (thing != null)
+            {
+                if (thing.Contains("{W}"))
+                {
+                    thing = thing.Replace("{W}", "DATS RACISTS");
+                }
+            }
+
+            return thing;
+        }
 
         [HttpGet]
-        public async Task<ActionResult> Details(int id) 
+        public async Task<ActionResult> Details(int id)
         {
             var response = await _mtgService.GetCardByID(id);
 

@@ -1,12 +1,7 @@
-using MTGCore.Models;
 using MTGCore.Services;
-using Newtonsoft.Json;
 using NSubstitute;
 using RichardSzalay.MockHttp;
 using Shouldly;
-using System;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

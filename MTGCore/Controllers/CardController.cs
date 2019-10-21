@@ -14,14 +14,14 @@ namespace MTGCore.Controllers
     {
         private MTGService _mtgService;
 
-        public CardController( MTGService mtgservice)
+        public CardController(MTGService mtgservice)
         {
             _mtgService = mtgservice;
         }
 
         public async Task<ActionResult> Index(int Page)
             {
-            var response = await _mtgService.GetCardsByPage(1);
+            var response = await _mtgService.GetCardsByPage(Page);
 
             if (response == null)
                 return NotFound();

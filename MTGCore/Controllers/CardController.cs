@@ -21,42 +21,20 @@ namespace MTGCore.Controllers
 
         public async Task<ActionResult> Index(int Page)
         {
-            string baseUrl = "https://api.magicthegathering.io/";
+            var response = await _mtgService.GetCardsByPage(1);
 
-            List<Card> cards = new List<Card>();
+            if (response == null)
+                return NotFound();
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseUrl);
+            return Ok(response);
 
-                client.DefaultRequestHeaders.Clear();
-                //Define request data format  
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync("v1/cards?page=1");
-
-                Res = await client.GetAsync("v1/cards?page=" + Page.ToString());
-
-                if (Res.IsSuccessStatusCode)
-                {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    var t1 = JsonConvert.DeserializeObject<RootObject>(EmpResponse).cards;
-                    return View(t1);
-                }
-            }
-
-            return NotFound();
-            
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get() 
+        public async Task<ActionResult> Details(int id) 
         {
-            var response = await _mtgService.GetCardByID(74208);
-
-            //var response2 = await _mtgService.GetCardsByPage(1);
+            var response = await _mtgService.GetCardByID(id);
 
             if (response == null)
                 return NotFound();

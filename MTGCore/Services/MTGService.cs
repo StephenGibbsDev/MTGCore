@@ -45,7 +45,5 @@ namespace MTGCore.Services
 
             return singleCard;
         }
-
-
     }
 }

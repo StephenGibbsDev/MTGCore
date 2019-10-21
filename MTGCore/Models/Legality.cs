@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MTGCore.Models
+﻿namespace MTGCore.Models
 {
     public class Legality
     {

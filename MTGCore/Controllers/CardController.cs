@@ -20,16 +20,15 @@ namespace MTGCore.Controllers
         }
 
         public async Task<ActionResult> Index(int Page)
-        {
+            {
             var response = await _mtgService.GetCardsByPage(1);
 
             if (response == null)
                 return NotFound();
 
-            return Ok(response);
-
-
+            return View(response);
         }
+
 
         [HttpGet]
         public async Task<ActionResult> Details(int id) 
@@ -39,7 +38,7 @@ namespace MTGCore.Controllers
             if (response == null)
                 return NotFound();
 
-            return Ok(response);
+            return View(response);
 
         }
     }

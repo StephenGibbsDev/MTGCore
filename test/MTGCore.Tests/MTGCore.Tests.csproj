@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MTGCore\MTGCore.csproj" />
+    <ProjectReference Include="..\..\src\MTGCore\MTGCore.csproj" />
   </ItemGroup>
 
 </Project>

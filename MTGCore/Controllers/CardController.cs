@@ -26,25 +26,7 @@ namespace MTGCore.Controllers
             if (response == null)
                 return NotFound();
 
-
-            //replaces whiites with silly txt, maybe use this for mana icons later?
-            response.ForEach(p => { p.manaCost = ReplaceWhites(p.manaCost); });
-
             return View(response);
-        }
-
-        public string ReplaceWhites(string thing)
-        {
-
-            if (thing != null)
-            {
-                if (thing.Contains("{W}"))
-                {
-                    thing = thing.Replace("{W}", "DATS RACISTS");
-                }
-            }
-
-            return thing;
         }
 
         [HttpGet]

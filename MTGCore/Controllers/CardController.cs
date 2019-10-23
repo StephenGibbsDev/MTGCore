@@ -14,32 +14,30 @@ namespace MTGCore.Controllers
     {
         private MTGService _mtgService;
 
-        public CardController( MTGService mtgservice)
+        public CardController(MTGService mtgservice)
         {
             _mtgService = mtgservice;
         }
 
         public async Task<ActionResult> Index(int Page)
         {
-            var response = await _mtgService.GetCardsByPage(1);
+            var response = await _mtgService.GetCardsByPage(Page);
 
             if (response == null)
                 return NotFound();
 
-            return Ok(response);
-
-
+            return View(response);
         }
 
         [HttpGet]
-        public async Task<ActionResult> Details(int id) 
+        public async Task<ActionResult> Details(int id)
         {
             var response = await _mtgService.GetCardByID(id);
 
             if (response == null)
                 return NotFound();
 
-            return Ok(response);
+            return View(response);
 
         }
     }

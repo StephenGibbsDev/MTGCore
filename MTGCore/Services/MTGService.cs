@@ -41,9 +41,9 @@ namespace MTGCore.Services
 
             var stream = await result.Content.ReadAsStringAsync();
 
-            var singleCard = JsonConvert.DeserializeObject<RootObject>(stream).cards;
+            var cardList = JsonConvert.DeserializeObject<RootObject>(stream).cards;
 
-            return singleCard;
+            return cardList;
         }
     }
 }

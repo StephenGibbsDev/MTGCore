@@ -5,6 +5,9 @@ namespace MTGCore.Models
 {
     public class Card
     {
+
+
+
         public string name { get; set; }
         public string manaCost { get; set; }
         public double cmc { get; set; }

@@ -13,7 +13,7 @@ namespace MTGCore.HelperClasses
             string output = "";
             foreach (string section in sections)
             {
-                output += string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" />", section);
+                output += string.Format($"<img src=\"/images/{section}.svg\" height=\"20\" width=\"20\" />");
             }
             return output;
         }

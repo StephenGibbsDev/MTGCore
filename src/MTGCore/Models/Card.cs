@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MTGCore.HelperClasses;
+using System.Collections.Generic;
 
 
 namespace MTGCore.Models
@@ -9,7 +10,8 @@ namespace MTGCore.Models
 
 
         public string name { get; set; }
-        public string manaCost { get; set; }
+        private string _manaCost;
+        public string manaCost { get { return _manaCost; } set { _manaCost = ManaConvert.String(value); } }
         public double cmc { get; set; }
         public List<object> colors { get; set; }
         public List<object> colorIdentity { get; set; }

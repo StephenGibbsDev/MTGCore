@@ -43,16 +43,5 @@ namespace MTGCore.Tests
 
             user.Count.ShouldBe(2);
         }
-
-        [Fact]
-        public void ManaConvert()
-        {
-            char manaTokenOne = 'W', manaTokenTwo = 'R', manaTokenThree = '5';
-            string manaCost = string.Format("{{{0}}}{{{1}}}{{{2}}}", manaTokenOne, manaTokenTwo, manaTokenThree);
-
-            string convertedManaCost = MTGCore.HelperClasses.ManaConvert.String(manaCost);
-
-            convertedManaCost.ShouldBe(string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" /><img src=\"/images/{1}.svg\" height=\"20\" width=\"20\" /><img src=\"/images/{2}.svg\" height=\"20\" width=\"20\" />", manaTokenOne, manaTokenTwo, manaTokenThree));
-        }
     }
 }

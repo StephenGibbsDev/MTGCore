@@ -28,10 +28,13 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardsByPage(Page);
 
+            var cardList = _mapper.Map<List<CardsDto.card>>(response);
+
+
             if (response == null)
                 return NotFound();
 
-            return View(response);
+            return View(cardList);
         }
 
         [HttpGet]

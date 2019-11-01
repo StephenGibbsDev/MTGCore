@@ -8,6 +8,8 @@ namespace MTGCore.Dtos
 
         public class card
         {
+            public string multiverseid { get; set; }
+            public string id { get; set; }
             public string name { get; set; }
             public string manaCost { get; set; }    
             public string cmc { get; set; }
@@ -18,6 +20,7 @@ namespace MTGCore.Dtos
             public string artist { get; set; }
             public string power { get; set; }
             public string toughness { get; set; }
+            public string imageUrl { get; set; }
         }
 
         

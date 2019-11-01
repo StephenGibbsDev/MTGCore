@@ -21,7 +21,6 @@ namespace MTGCore.Controllers
         {
             _mtgService = mtgservice;
             _mapper = mapper;
-
         }
 
         public async Task<ActionResult> Index(int Page)
@@ -29,7 +28,6 @@ namespace MTGCore.Controllers
             var response = await _mtgService.GetCardsByPage(Page);
 
             var cardList = _mapper.Map<List<CardsDto.card>>(response);
-
 
             if (response == null)
                 return NotFound();
@@ -48,7 +46,6 @@ namespace MTGCore.Controllers
                 return NotFound();
 
             return View(model);
-
         }
     }
 }

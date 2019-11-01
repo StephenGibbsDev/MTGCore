@@ -13,7 +13,7 @@ namespace MTGCore.Services
     {
         public MappingProfile()
         {
-            //TODO: refactor this, this is gross
+            //TODO: refactor this, this is gross. Card => CardDto would be ideal...
             CreateMap<Card,CardsDto.card>();
         }
 

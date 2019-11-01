@@ -1,4 +1,4 @@
-﻿@model MTGCore.Models.Card
+﻿@model MTGCore.Dtos.CardsDto.card
 
 @{
     ViewData["Title"] = "Details";
@@ -11,120 +11,71 @@
     <h4>Card</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.manaCost)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.manaCost)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.cmc)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.cmc)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.type)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.type)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.rarity)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.rarity)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.set)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.set)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.setName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.setName)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.text)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.text)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.artist)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.artist)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.number)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.number)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.layout)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.layout)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.multiverseid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.multiverseid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.imageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.imageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.originalText)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.originalText)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.originalType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.originalType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.flavor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.flavor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.power)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.power)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.toughness)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.toughness)
-        </dd>
+        @if (Model.power != null || Model.toughness != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.power)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.power)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.toughness)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.toughness)
+            </dd>
+        }
+
+
     </dl>
 </div>
 <div>

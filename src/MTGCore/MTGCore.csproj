@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MTGCore.Dtos\MTGCore.Dtos\MTGCore.Dtos.csproj" />
+    <ProjectReference Include="..\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj" />
   </ItemGroup>
 
 </Project>

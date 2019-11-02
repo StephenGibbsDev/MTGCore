@@ -51,7 +51,5 @@ namespace MTGCore.Controllers
 
             return View(model);
         }
-
-
     }
 }

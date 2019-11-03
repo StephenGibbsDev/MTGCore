@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MTGCore.Dtos
+namespace MTGCore.Dtos.Models
 {
     public class Cards
     {

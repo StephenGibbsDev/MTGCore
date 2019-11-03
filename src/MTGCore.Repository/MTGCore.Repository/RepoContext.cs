@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration.Json;
 
 namespace MTGCore.Repository
 {
-    public class RepoContext : Microsoft.EntityFrameworkCore.DbContext
+    public class RepoContext : Microsoft.EntityFrameworkCore.DbContext, IRepoContext
     {
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 
@@ -34,5 +34,4 @@ namespace MTGCore.Repository
         }
 
     }
-
 }

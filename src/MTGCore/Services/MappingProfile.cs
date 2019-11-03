@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MTGCore.Models;
-using MTGCore.Dtos;
+using MTGCore.Dtos.Models;
 
 namespace MTGCore.Services
 {

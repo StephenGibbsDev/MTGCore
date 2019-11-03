@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MTGCore.Dtos;
+using MTGCore.Dtos.Models;
 using MTGCore.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
@@ -18,9 +18,9 @@ namespace MTGCore.Controllers
     {
         private MTGService _mtgService;
         private IMapper _mapper;
-        private readonly RepoContext _context;
+        private readonly IRepoContext _context;
 
-        public CardController(MTGService mtgservice, IMapper mapper, RepoContext context)
+        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
@@ -29,6 +29,7 @@ namespace MTGCore.Controllers
 
         public async Task<ActionResult> Index(int Page)
         {
+
             var response = await _mtgService.GetCardsByPage(Page);
 
             var cardList = _mapper.Map<List<Cards>>(response);

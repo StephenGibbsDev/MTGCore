@@ -1,4 +1,4 @@
-﻿@model MTGCore.Dtos.CardsDto.card
+﻿@model MTGCore.Dtos.Models.Cards
 
 @{
     ViewData["Title"] = "Details";
@@ -11,6 +11,7 @@
     <h4>Card</h4>
     <hr />
     <dl class="row">
+        <a asp-controller="Card" asp-action="AddToDeck">ADD TO DECK!</a>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.name)
         </dt>

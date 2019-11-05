@@ -6,9 +6,6 @@ namespace MTGCore.Models
 {
     public class Card
     {
-
-
-
         public string name { get; set; }
         private string _manaCost;
         public string manaCost { get { return _manaCost; } set { _manaCost = ManaConvert.String(value); } }

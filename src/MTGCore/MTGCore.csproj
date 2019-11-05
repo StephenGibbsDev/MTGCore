@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-MTGCore-18D6CC85-FDCE-4E54-8163-F0C947DFCF6F</UserSecretsId>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
 

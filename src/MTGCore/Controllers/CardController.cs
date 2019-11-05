@@ -10,6 +10,7 @@ using MTGCore.Dtos.Models;
 using MTGCore.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
+using MTGCore.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace MTGCore.Controllers
@@ -19,18 +20,22 @@ namespace MTGCore.Controllers
         private MTGService _mtgService;
         private IMapper _mapper;
         private readonly IRepoContext _context;
+        private readonly IConversionService _conversion;
 
-        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context)
+        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
             _context = context;
+            _conversion = conversion;
         }
 
         public async Task<ActionResult> Index(int Page)
         {
 
             var response = await _mtgService.GetCardsByPage(Page);
+
+            List<Card> convertedCard = _conversion.Convert(response);
 
             var cardList = _mapper.Map<List<Cards>>(response);
 
@@ -45,7 +50,9 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByID(id);
 
-             var model = _mapper.Map<Cards>(response);
+            Card convertedCard = _conversion.Convert(response);
+
+            var model = _mapper.Map<Cards>(convertedCard);
 
             if (response == null)
                 return NotFound();

@@ -11,7 +11,6 @@
     <h4>Card</h4>
     <hr />
     <dl class="row">
-        <a asp-controller="Card" asp-action="AddToDeck">ADD TO DECK!</a>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.name)
         </dt>
@@ -21,13 +20,8 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.manaCost)
         </dt>
-<<<<<<< HEAD
         <dd class = "col-sm-10">
             @Html.Raw(Model.manaCost)
-=======
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.manaCost)
->>>>>>> master
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.cmc)

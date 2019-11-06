@@ -9,51 +9,21 @@ namespace MTGCore.Services
 {
     public class ManaConversionService : IConversionService
     {
-        public Card Convert(Card cardToBeConverted)
+        public string ConvertToSymbol(string? manaCost)
         {
-            return HandleCardConversion(cardToBeConverted) ?? cardToBeConverted;
-        }
-
-        public List<Card> Convert(List<Card> cardsToBeConverted)
-        {
-            Card ReturnedCard;
-            foreach(Card card in cardsToBeConverted)
+            //this may be a redundant check
+            if (manaCost == null)
             {
-                 ReturnedCard = HandleCardConversion(card);
-                if(ReturnedCard != null)
-                {
-                    card.manaCost = ReturnedCard.manaCost;
-                }
-                 
+                return "";
             }
-            
-            return cardsToBeConverted;
-        }
-
-        private Card HandleCardConversion(Card card)
-        {
-            if(card.manaCost == null)
-            {
-                return null;
-            }
-
-            string manaCost = card.manaCost;
 
             string[] sections = manaCost.Split(new string[] { "{", "}" }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (sections.Length == 0)
-            {
-                return null;
-            }
-
             string output = "";
             foreach (string section in sections)
             {
-                output += string.Format($"<img src=\"/images/{section}.svg\" height=\"20\" width=\"20\" />");
+                output += string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" />", section);
             }
-            card.manaCost = output;
-
-            return card;
+            return output;
         }
     }
 }

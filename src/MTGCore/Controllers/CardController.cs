@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace MTGCore.Controllers
 
             var response = await _mtgService.GetCardsByPage(Page);
 
-            List<Card> convertedCard = _conversion.Convert(response);
+            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
 
             var cardList = _mapper.Map<List<Cards>>(response);
 
@@ -50,9 +51,9 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByID(id);
 
-            Card convertedCard = _conversion.Convert(response);
+            response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
 
-            var model = _mapper.Map<Cards>(convertedCard);
+            var model = _mapper.Map<Cards>(response);
 
             if (response == null)
                 return NotFound();
@@ -61,3 +62,4 @@ namespace MTGCore.Controllers
         }
     }
 }
+

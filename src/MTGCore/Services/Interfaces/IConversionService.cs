@@ -8,7 +8,7 @@ namespace MTGCore.Services.Interfaces
 {
     public interface IConversionService
     {
-        Card Convert(Card ToBeConverted);
-        List<Card> Convert(List<Card> ToBeConverted);
+         string ConvertToSymbol(string manaCost);
+
     }
 }

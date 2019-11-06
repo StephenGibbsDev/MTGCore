@@ -1,15 +1,12 @@
-﻿using MTGCore.Models;
-using MTGCore.Services.Interfaces;
+﻿using MTGCore.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace MTGCore.Services
 {
     public class ManaConversionService : IConversionService
     {
-        public string ConvertToSymbol(string? manaCost)
+        public string ConvertToSymbol(string? manaCost, string root)
         {
             //this may be a redundant check
             if (manaCost == null)
@@ -21,7 +18,14 @@ namespace MTGCore.Services
             string output = "";
             foreach (string section in sections)
             {
-                output += string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" />", section);
+                if (File.Exists(root + $"{section}.svg"))
+                {
+                    output += string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" />", section);
+                } else
+                {
+                    output += $"{{{section}}}";
+                }
+                
             }
             return output;
         }

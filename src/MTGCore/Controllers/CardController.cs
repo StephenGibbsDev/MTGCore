@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
@@ -22,13 +23,15 @@ namespace MTGCore.Controllers
         private IMapper _mapper;
         private readonly IRepoContext _context;
         private readonly IConversionService _conversion;
+        private readonly IWebHostEnvironment _env;
 
-        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion)
+        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion, IWebHostEnvironment env)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
             _context = context;
             _conversion = conversion;
+            _env = env;
         }
 
         public async Task<ActionResult> Index(int Page)
@@ -36,7 +39,9 @@ namespace MTGCore.Controllers
 
             var response = await _mtgService.GetCardsByPage(Page);
 
-            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
+            string rootPath = _env.WebRootPath;
+
+            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost, $@"{rootPath}\images\"); return x; }).ToList();
 
             var cardList = _mapper.Map<List<Cards>>(response);
 
@@ -51,7 +56,9 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByID(id);
 
-            response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
+            string rootPath = _env.WebRootPath;
+
+            response.manaCost = _conversion.ConvertToSymbol(response.manaCost, $@"{rootPath}\images\");
 
             var model = _mapper.Map<Cards>(response);
 

@@ -6,6 +6,12 @@
 
 
   <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\MTGCore\MTGCore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -28,24 +28,17 @@ namespace MTGCore.Proxy.Controllers
 
         {
             //https://localhost:44305/card/Details?id=397641
-            //get path
+
             var path = Request.Path;
 
 
-            //hash path
             var hashedPath = CalculateMD5Hash(path);
-
-
-            //see if path exists as json object
 
             var root = Environment.CurrentDirectory;
             var fullPath = $@"{root}\Data\{hashedPath}.json";
 
             if (!System.IO.File.Exists(fullPath))
             {
-                //if not 
-                //call mtg service
-
                 var request = new HttpRequestMessage(HttpMethod.Get,
                    "https://api.magicthegathering.io" + path);
 
@@ -61,27 +54,11 @@ namespace MTGCore.Proxy.Controllers
 
                     return Content(responseStream);
                 }
-
-
             }
+                //reads from json file and return the string to 
+                string json = System.IO.File.ReadAllText(fullPath);
 
-            //if yes
-            //serve up object using json contents
-
-
-
-
-            //generate new json with {hash}.json from returned string from webservice
-
-
-
-
-            //var uri = new Uri(t1);
-            //Request.Url.Segments[2]; //Index of directory2
-
-
-
-            return Content("FAIL");
+                return Content(json);
         }
 
         public string CalculateMD5Hash(string input)

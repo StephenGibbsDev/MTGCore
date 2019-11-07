@@ -23,14 +23,13 @@ namespace MTGCore.Proxy.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [Route("v1/cards/{id}")]
+        [Route("{*anyRoute}")]
         public async Task<IActionResult> cards(int id)
 
         {
             //https://localhost:44305/card/Details?id=397641
 
             var path = Request.Path;
-
 
             var hashedPath = CalculateMD5Hash(path);
 

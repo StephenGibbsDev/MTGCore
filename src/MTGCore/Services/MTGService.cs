@@ -22,7 +22,7 @@ namespace MTGCore.Services
 
         public async Task<Card> GetCardByID(int multiverseID)
         {
-            var result = await _client.GetAsync($"cards/{multiverseID}");
+            var result = await _client.GetAsync($"cards/{multiverseID}  ");
 
             if (!result.IsSuccessStatusCode)
                 return default;

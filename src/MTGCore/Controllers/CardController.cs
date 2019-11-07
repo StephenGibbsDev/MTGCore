@@ -32,6 +32,7 @@ namespace MTGCore.Controllers
 
             var response = await _mtgService.GetCardsByPage(Page);
 
+
             var cardList = _mapper.Map<List<Cards>>(response);
 
             if (response == null)

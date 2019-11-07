@@ -9,8 +9,10 @@ namespace MTGCore.Services
 {
     public class MTGService
     {
+        public const string ProxiedClient = "test";
         private HttpClient _client;
-        public string _baseUrl = "https://api.magicthegathering.io/v1/";
+        //public string _baseUrl = "https://api.magicthegathering.io/v1/";
+        public string _baseUrl = "https://localhost:44317/v1/";
 
         public MTGService(HttpClient client)
         {

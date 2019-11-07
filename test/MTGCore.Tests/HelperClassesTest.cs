@@ -13,7 +13,7 @@ namespace MTGCore.Tests
         public HelperClassesTest()
         {
             IFileService fileService = new TestFileService();
-            _conversion = new ManaConversionService(fileService);
+            _conversion = new ManaConversionService(fileService, "");
         }
 
         [Fact]
@@ -22,8 +22,8 @@ namespace MTGCore.Tests
             string manaCostString1 = "{false}{R}{5}";
             string manaCostString2 = "{W}{R}{5}";
 
-            string convertedManaCost1 = _conversion.ConvertToSymbol(manaCostString1, "");
-            string convertedManaCost2 = _conversion.ConvertToSymbol(manaCostString2, "");
+            string convertedManaCost1 = _conversion.ConvertToSymbol(manaCostString1);
+            string convertedManaCost2 = _conversion.ConvertToSymbol(manaCostString2);
 
             convertedManaCost1.ShouldBe("{false}<img src=\"/images/R.svg\" height=\"20\" width=\"20\" /><img src=\"/images/5.svg\" height=\"20\" width=\"20\" />");
             convertedManaCost2.ShouldBe("<img src=\"/images/W.svg\" height=\"20\" width=\"20\" /><img src=\"/images/R.svg\" height=\"20\" width=\"20\" /><img src=\"/images/5.svg\" height=\"20\" width=\"20\" />");

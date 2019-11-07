@@ -42,7 +42,7 @@ namespace MTGCore
             IFileService fileService = new FileService();
             services.AddScoped<IRepoContext, RepoContext>();
             //services.AddScoped<IConversionService, ManaConversionService>();
-            services.AddTransient<IConversionService>(s => new ManaConversionService(fileService));
+            services.AddTransient<IConversionService>(s => new ManaConversionService(fileService, Environment.CurrentDirectory + @"\wwwroot\images\"));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

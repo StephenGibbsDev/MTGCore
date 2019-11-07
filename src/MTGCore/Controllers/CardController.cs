@@ -41,7 +41,7 @@ namespace MTGCore.Controllers
 
             string rootPath = _env.WebRootPath;
 
-            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost, $@"{rootPath}\images\"); return x; }).ToList();
+            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost, @$"{rootPath}\images\"); return x; }).ToList();
 
             var cardList = _mapper.Map<List<Cards>>(response);
 
@@ -58,7 +58,7 @@ namespace MTGCore.Controllers
 
             string rootPath = _env.WebRootPath;
 
-            response.manaCost = _conversion.ConvertToSymbol(response.manaCost, $@"{rootPath}\images\");
+            response.manaCost = _conversion.ConvertToSymbol(response.manaCost, @$"{rootPath}\images\");
 
             var model = _mapper.Map<Cards>(response);
 

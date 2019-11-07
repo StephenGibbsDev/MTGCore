@@ -39,8 +39,10 @@ namespace MTGCore
 
             services.AddDbContext<RepoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            IFileService fileService = new FileService();
             services.AddScoped<IRepoContext, RepoContext>();
-            services.AddScoped<IConversionService, ManaConversionService>();
+            //services.AddScoped<IConversionService, ManaConversionService>();
+            services.AddTransient<IConversionService>(s => new ManaConversionService(fileService));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

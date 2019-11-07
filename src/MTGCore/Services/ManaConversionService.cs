@@ -6,7 +6,14 @@ namespace MTGCore.Services
 {
     public class ManaConversionService : IConversionService
     {
-        public string ConvertToSymbol(string? manaCost, string root)
+        private readonly IFileService _file;
+
+        public ManaConversionService(IFileService file)
+        {
+            _file = file;
+        }
+
+        public string ConvertToSymbol(string manaCost, string root)
         {
             //this may be a redundant check
             if (manaCost == null)
@@ -18,7 +25,7 @@ namespace MTGCore.Services
             string output = "";
             foreach (string section in sections)
             {
-                if (File.Exists(root + $"{section}.svg"))
+                if (_file.FileExists($"{root}{section}.svg"))
                 {
                     output += string.Format("<img src=\"/images/{0}.svg\" height=\"20\" width=\"20\" />", section);
                 } else

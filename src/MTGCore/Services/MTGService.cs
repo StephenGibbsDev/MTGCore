@@ -11,6 +11,7 @@ namespace MTGCore.Services
     {
         public const string ProxiedClient = "test";
         private HttpClient _client;
+        //change this base URL to a fiield in the appsettings.json and pull here and tests
         //public string _baseUrl = "https://api.magicthegathering.io/v1/";
         public string _baseUrl = "https://localhost:44317/v1/";
 

@@ -9,6 +9,7 @@ namespace MTGCore.Services.TestImplementations
 {
     public class TestFileService : IFileService
     {
+        // File service for unit tests
         public bool FileExists(string filePath)
         {
             if (filePath.Contains("false"))

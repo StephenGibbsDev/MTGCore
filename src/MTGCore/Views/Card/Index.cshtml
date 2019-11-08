@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.manaCost)
+                @Html.Raw(item.manaCost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.cmc)

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using MTGCore.Services;
 using AutoMapper;
 using MTGCore.Repository;
+using MTGCore.Services.Interfaces;
 
 namespace MTGCore
 {
@@ -37,8 +38,10 @@ namespace MTGCore
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<RepoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            // Generic fileService handles any file operations required
+            IFileService fileService = new FileService();
             services.AddScoped<IRepoContext, RepoContext>();
+            services.AddScoped<IConversionService>(s => new ManaConversionService(fileService, Environment.CurrentDirectory + @"\wwwroot\images\"));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

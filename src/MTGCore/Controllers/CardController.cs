@@ -37,8 +37,6 @@ namespace MTGCore.Controllers
 
             var response = await _mtgService.GetCardsByPage(Page);
 
-            //string rootPath = _env.WebRootPath;
-            //string rootPath = Environment.CurrentDirectory + @"\wwwroot";
 
             response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
 

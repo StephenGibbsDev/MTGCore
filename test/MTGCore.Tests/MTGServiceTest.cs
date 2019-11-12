@@ -16,10 +16,10 @@ namespace MTGCore.Tests
             var mockHttp = new MockHttpMessageHandler();
 
             //setup mock test
-            mockHttp.When("https://api.magicthegathering.io/v1/*")
+            mockHttp.When("https://localhost:44317/v1/*")
                     .Respond("application/json", "{'card': {'name': 'TestyCard'}}"); // Respond with JSON
 
-           var client = mockHttp.ToHttpClient();
+            var client = mockHttp.ToHttpClient();
 
             var mtgservice = new MTGService(client);
             var user = await mtgservice.GetCardByID(74208);
@@ -33,7 +33,7 @@ namespace MTGCore.Tests
             var mockHttp = new MockHttpMessageHandler();
 
             //setup mock test
-            mockHttp.When("https://api.magicthegathering.io/v1/*")
+            mockHttp.When("https://localhost:44317/v1/*")
                     .Respond("application/json", "{'cards': [{'name': 'TestyCard'},{'name': 'secondtesty'}]}"); // Respond with JSON
 
             var client = mockHttp.ToHttpClient();

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\MTGCore\MTGCore.csproj" />
+  </ItemGroup>
+
+</Project>

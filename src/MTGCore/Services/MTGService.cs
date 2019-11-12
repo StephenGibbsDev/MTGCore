@@ -9,8 +9,11 @@ namespace MTGCore.Services
 {
     public class MTGService
     {
+        public const string ProxiedClient = "test";
         private HttpClient _client;
-        public string _baseUrl = "https://api.magicthegathering.io/v1/";
+        //change this base URL to a fiield in the appsettings.json and pull here and tests
+        //public string _baseUrl = "https://api.magicthegathering.io/v1/";
+        public string _baseUrl = "https://localhost:44317/v1/";
 
         public MTGService(HttpClient client)
         {
@@ -20,7 +23,7 @@ namespace MTGCore.Services
 
         public async Task<Card> GetCardByID(int multiverseID)
         {
-            var result = await _client.GetAsync($"cards/{multiverseID}");
+            var result = await _client.GetAsync($"cards/{multiverseID}  ");
 
             if (!result.IsSuccessStatusCode)
                 return default;

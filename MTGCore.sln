@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTGCore", "src\MTGCore\MTGC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTGCore.Dtos", "src\MTGCore.Dtos\MTGCore.Dtos\MTGCore.Dtos.csproj", "{1656BA49-1658-4BD7-B4DF-A4AE803EF1C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGCore.Repository", "src\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj", "{F776F528-330F-4684-9DDB-97E9459A4092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTGCore.Repository", "src\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj", "{F776F528-330F-4684-9DDB-97E9459A4092}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGCore.Proxy", "src\MTGCore.Proxy\MTGCore.Proxy.csproj", "{03B8711E-9C74-46A6-84A9-0610B233A101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F776F528-330F-4684-9DDB-97E9459A4092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F776F528-330F-4684-9DDB-97E9459A4092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F776F528-330F-4684-9DDB-97E9459A4092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B8711E-9C74-46A6-84A9-0610B233A101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B8711E-9C74-46A6-84A9-0610B233A101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B8711E-9C74-46A6-84A9-0610B233A101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B8711E-9C74-46A6-84A9-0610B233A101}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

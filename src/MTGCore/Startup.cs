@@ -33,7 +33,7 @@ namespace MTGCore
         {
             services.AddHttpClient();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<RepoContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -44,7 +44,7 @@ namespace MTGCore
             services.AddScoped<IConversionService>(s => new ManaConversionService(fileService, Environment.CurrentDirectory + @"\wwwroot\images\"));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<RepoContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

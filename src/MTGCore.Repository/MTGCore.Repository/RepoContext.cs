@@ -7,10 +7,11 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MTGCore.Repository
 {
-    public class RepoContext : Microsoft.EntityFrameworkCore.DbContext, IRepoContext
+    public class RepoContext : IdentityDbContext, IRepoContext
     {
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 

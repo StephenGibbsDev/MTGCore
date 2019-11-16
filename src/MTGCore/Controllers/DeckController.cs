@@ -40,6 +40,7 @@ namespace MTGCore.Controllers
 
 
             var decks = _context.Deck.Where(x => x.UserID == userId);
+
             return View(decks);
         }
 
@@ -64,6 +65,30 @@ namespace MTGCore.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+            var deck = _context.Deck.SingleOrDefault(x => x.Id == Id);
+
+            return View(deck);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Deck editedDeck)
+        {
+
+            var deck = _context.Deck.SingleOrDefault(x => x.Id == editedDeck.Id);
+
+            var UserIDString = _userManager.GetUserId(HttpContext.User);
+            deck.UserID = new Guid(UserIDString);
+            deck.Title = editedDeck.Title;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public async Task AddCardAsync(int id)
         {

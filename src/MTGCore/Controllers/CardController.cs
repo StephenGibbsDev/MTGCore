@@ -40,7 +40,7 @@ namespace MTGCore.Controllers
 
             response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
 
-            var cardList = _mapper.Map<List<Cards>>(response);
+            var cardList = _mapper.Map<List<CardDto>>(response);
 
             if (response == null)
                 return NotFound();
@@ -57,7 +57,7 @@ namespace MTGCore.Controllers
 
             response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
 
-            var model = _mapper.Map<Cards>(response);
+            var model = _mapper.Map<CardDto>(response);
 
             if (response == null)
                 return NotFound();

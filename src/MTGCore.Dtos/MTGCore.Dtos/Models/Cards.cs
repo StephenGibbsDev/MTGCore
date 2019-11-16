@@ -2,7 +2,7 @@
 
 namespace MTGCore.Dtos.Models
 {
-    public class Cards
+    public class CardDto
     {
         public string multiverseid { get; set; }
         //TODO: make sure automapper takes an integer of ID not string

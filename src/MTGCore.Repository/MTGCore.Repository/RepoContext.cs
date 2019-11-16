@@ -15,9 +15,9 @@ namespace MTGCore.Repository
     {
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 
-        public virtual DbSet<Cards> Cards { get; set; }
-        public virtual DbSet<Decks> Decks { get; set; }
-        public virtual DbSet<DeckCards> DeckCards { get; set; }
+        public virtual DbSet<CardDto> Card { get; set; }
+        public virtual DbSet<Deck> Deck { get; set; }
+        public virtual DbSet<DeckCards> DeckCards { get; set; } 
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<RepoContext>

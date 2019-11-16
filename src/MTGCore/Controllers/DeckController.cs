@@ -43,11 +43,26 @@ namespace MTGCore.Controllers
             return View(decks);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             Deck newdeck = new Deck();
 
             return View(newdeck);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Deck deck)
+        {
+            var UserIDString = _userManager.GetUserId(HttpContext.User);
+
+            deck.UserID = new Guid(UserIDString);
+
+            _context.Deck.Add(deck);
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task AddCardAsync(int id)

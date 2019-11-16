@@ -33,12 +33,16 @@ namespace MTGCore
         {
             services.AddHttpClient();
 
+            //services.AddDbContext<RepoContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<RepoContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<RepoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // Generic fileService handles any file operations required
+
             IFileService fileService = new FileService();
             services.AddScoped<IRepoContext, RepoContext>();
             services.AddScoped<IConversionService>(s => new ManaConversionService(fileService, Environment.CurrentDirectory + @"\wwwroot\images\"));
@@ -46,7 +50,9 @@ namespace MTGCore
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
+
             services.AddRazorPages();
             services.AddHttpClient<MTGService>();
 

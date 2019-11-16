@@ -1,14 +1,46 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MTGCore.Repository.Migrations
+namespace MTGCore.Data.Migrations
 {
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(128)",
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(128)",
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(128)",
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(128)",
+                oldMaxLength: 128);
+
             migrationBuilder.CreateTable(
-                name: "Cards",
+                name: "Card",
                 columns: table => new
                 {
                     id = table.Column<string>(nullable: false),
@@ -27,11 +59,11 @@ namespace MTGCore.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cards", x => x.id);
+                    table.PrimaryKey("PK_Card", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Decks",
+                name: "Deck",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -41,7 +73,7 @@ namespace MTGCore.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.PrimaryKey("PK_Deck", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,15 +89,15 @@ namespace MTGCore.Repository.Migrations
                 {
                     table.PrimaryKey("PK_DeckCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeckCards_Cards_CardID",
+                        name: "FK_DeckCards_Card_CardID",
                         column: x => x.CardID,
-                        principalTable: "Cards",
+                        principalTable: "Card",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DeckCards_Decks_DeckID",
+                        name: "FK_DeckCards_Deck_DeckID",
                         column: x => x.DeckID,
-                        principalTable: "Decks",
+                        principalTable: "Deck",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -87,10 +119,42 @@ namespace MTGCore.Repository.Migrations
                 name: "DeckCards");
 
             migrationBuilder.DropTable(
-                name: "Cards");
+                name: "Card");
 
             migrationBuilder.DropTable(
-                name: "Decks");
+                name: "Deck");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
         }
     }
 }

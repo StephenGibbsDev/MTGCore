@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MTGCore.Dtos.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
+using MTGCore.ViewModels;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,7 +38,6 @@ namespace MTGCore.Controllers
             }
 
             var userId = new Guid(UserIDString);
-
 
             var decks = _context.Deck.Where(x => x.UserID == userId);
 
@@ -87,6 +87,27 @@ namespace MTGCore.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        
+        [HttpPost]
+        public void AddToDeck(CardViewModel cardVM)
+        {
+
+
+
+
+
+
+            ////TODO: GET it posting here
+
+            //var deckCard = new DeckCards();
+
+            //deckCard.Card = cardVM.Card;
+            //deckCard.Deck = cardVM.selectedDeck;
+
+            //_context.DeckCards.Add(deckCard);
+            //_context.SaveChanges();
         }
 
 

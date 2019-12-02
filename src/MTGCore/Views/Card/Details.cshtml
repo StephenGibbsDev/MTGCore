@@ -1,90 +1,106 @@
-﻿@model MTGCore.Dtos.Models.CardDto
+﻿@model MTGCore.ViewModels.CardViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<form asp-controller="Deck" asp-action="AddToDeck" method="post">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <h1>Details</h1>
         </div>
-        <div class="col-lg-4">
-                <a class="btn btn-primary pull-right" asp-controller="Deck" asp-action="AddToDeck">ADD TO DECK!</a>
-        </div>
-    </div>
-<div>
-    <h4>Card</h4>
-    <hr />
-    <dl class="row">
-        
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.manaCost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.Raw(Model.manaCost)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cmc)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cmc)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.rarity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.rarity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.set)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.set)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.text)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.text)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.artist)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.artist)
-        </dd>
-        @if (Model.power != null || Model.toughness != null)
+        @if (Model != null)
         {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.power)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.power)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.toughness)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.toughness)
-            </dd>
+            <div class="col-lg-8">
+                <div class="input-group mb-3 input-group-lg">
+                    <select asp-for="selectedDeck"
+                            asp-items="Model.Decks"
+                            class="custom-select">
+                        <option selected>Select Deck</option>
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <input type="submit" value="Submit">
+                        </span>
+                    </div>
+                </div>
+            </div>
         }
+    </div>
+    <div>
+        <h4>Card</h4>
+        <hr />
+        <input type="hidden" asp-for="@Model.Card.multiverseid" />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.manaCost)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.Raw(Model.Card.manaCost)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.cmc)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.cmc)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.type)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.type)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.rarity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.rarity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.set)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.set)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.text)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.text)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Card.artist)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Card.artist)
+            </dd>
+            @if (Model.Card.power != null || Model.Card.toughness != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Card.power)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Card.power)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Card.toughness)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Card.toughness)
+                </dd>
+            }
 
 
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>

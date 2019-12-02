@@ -93,21 +93,17 @@ namespace MTGCore.Controllers
         [HttpPost]
         public void AddToDeck(CardViewModel cardVM)
         {
-
-
-
-
-
-
             ////TODO: GET it posting here
 
-            //var deckCard = new DeckCards();
+            var deckCard = new DeckCards();
 
-            //deckCard.Card = cardVM.Card;
-            //deckCard.Deck = cardVM.selectedDeck;
+            deckCard.CardID = cardVM.multiverseid;
+            deckCard.DeckID = cardVM.DeckID; 
 
-            //_context.DeckCards.Add(deckCard);
-            //_context.SaveChanges();
+
+
+            _context.DeckCards.Add(deckCard);
+            _context.SaveChanges();
         }
 
 

@@ -13,7 +13,7 @@
         {
             <div class="col-lg-8">
                 <div class="input-group mb-3 input-group-lg">
-                    <select asp-for="selectedDeck"
+                    <select asp-for="DeckID"
                             asp-items="Model.Decks"
                             class="custom-select">
                         <option selected>Select Deck</option>
@@ -30,70 +30,70 @@
     <div>
         <h4>Card</h4>
         <hr />
-        <input type="hidden" asp-for="@Model.Card.multiverseid" />
+        <input type="hidden" asp-for="@Model.multiverseid" />
 
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.name)
+                @Html.DisplayNameFor(model => model.name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.name)
+                @Html.DisplayFor(model => model.name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.manaCost)
+                @Html.DisplayNameFor(model => model.manaCost)
             </dt>
             <dd class="col-sm-10">
-                @Html.Raw(Model.Card.manaCost)
+                @Html.Raw(Model.manaCost)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.cmc)
+                @Html.DisplayNameFor(model => model.cmc)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.cmc)
+                @Html.DisplayFor(model => model.cmc)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.type)
+                @Html.DisplayNameFor(model => model.type)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.type)
+                @Html.DisplayFor(model => model.type)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.rarity)
+                @Html.DisplayNameFor(model => model.rarity)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.rarity)
+                @Html.DisplayFor(model => model.rarity)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.set)
+                @Html.DisplayNameFor(model => model.set)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.set)
+                @Html.DisplayFor(model => model.set)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.text)
+                @Html.DisplayNameFor(model => model.text)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.text)
+                @Html.DisplayFor(model => model.text)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Card.artist)
+                @Html.DisplayNameFor(model => model.artist)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Card.artist)
+                @Html.DisplayFor(model => model.artist)
             </dd>
-            @if (Model.Card.power != null || Model.Card.toughness != null)
+            @if (Model.power != null || Model.toughness != null)
             {
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Card.power)
+                    @Html.DisplayNameFor(model => model.power)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Card.power)
+                    @Html.DisplayFor(model => model.power)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Card.toughness)
+                    @Html.DisplayNameFor(model => model.toughness)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Card.toughness)
+                    @Html.DisplayFor(model => model.toughness)
                 </dd>
             }
 

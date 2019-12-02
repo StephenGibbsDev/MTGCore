@@ -75,7 +75,10 @@ namespace MTGCore.Controllers
                 Value = x.Id.ToString()
             }).ToList();
 
-            CardViewModel cardVM = new CardViewModel(model, selectList);
+            CardViewModel cardVM = new CardViewModel(selectList);
+
+            cardVM.multiverseid = model.multiverseid;
+            cardVM.name = model.name;
 
             if (response == null)
                 return NotFound();

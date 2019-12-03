@@ -58,6 +58,7 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByID(id);
 
+
             response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
 
             var model = _mapper.Map<CardDto>(response);

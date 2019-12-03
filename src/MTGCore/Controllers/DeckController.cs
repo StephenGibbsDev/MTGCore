@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MTGCore.Dtos.Models;
@@ -20,12 +21,16 @@ namespace MTGCore.Controllers
         private MTGService _mtgService;
         private readonly IRepoContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private IMapper _mapper;
 
-        public DeckController(IRepoContext context, MTGService mtgservice, UserManager<IdentityUser> userManager)
+
+        public DeckController(IRepoContext context, IMapper mapper, MTGService mtgservice, UserManager<IdentityUser> userManager)
         {
             _mtgService = mtgservice;
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
+            
         }
 
         public IActionResult Index()
@@ -91,17 +96,33 @@ namespace MTGCore.Controllers
 
         
         [HttpPost]
-        public void AddToDeck(CardViewModel cardVM)
+        public async Task AddToDeckAsync(CardViewModel cardVM)
         {
             ////TODO: GET it posting here
 
             var deckCard = new DeckCards();
 
-            deckCard.CardID = cardVM.multiverseid;
-            deckCard.DeckID = cardVM.DeckID; 
+
+            //get card from service
+            var card = await _mtgService.GetCardByID(Convert.ToInt32(cardVM.multiverseid));
+
+            deckCard.CardID = card.id;
+            deckCard.DeckID = cardVM.DeckID;
+
+            //insert card into db
+            var model = _mapper.Map<CardDto>(card);
+
+            var dbCard = _context.Card.Where(x => x.id == card.id).SingleOrDefault();
+
+            if (dbCard == null)
+            {
+                _context.Card.Add(model);
+                _context.SaveChanges();
+            };
 
 
 
+            //insert into deckcard
             _context.DeckCards.Add(deckCard);
             _context.SaveChanges();
         }

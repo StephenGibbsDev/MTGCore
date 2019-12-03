@@ -98,11 +98,11 @@ namespace MTGCore.Controllers
         [HttpPost]
         public async Task AddToDeckAsync(CardViewModel cardVM)
         {
-            ////TODO: GET it posting here
+            //TODO NEXT: sort outfrontend to display other relevant fields
 
             var deckCard = new DeckCards();
 
-
+            //TODO: this is expensive you are querying database and trying to get a response from the web service.
             //get card from service
             var card = await _mtgService.GetCardByID(Convert.ToInt32(cardVM.multiverseid));
 
@@ -119,8 +119,6 @@ namespace MTGCore.Controllers
                 _context.Card.Add(model);
                 _context.SaveChanges();
             };
-
-
 
             //insert into deckcard
             _context.DeckCards.Add(deckCard);

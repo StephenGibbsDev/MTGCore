@@ -124,12 +124,5 @@ namespace MTGCore.Controllers
             _context.DeckCards.Add(deckCard);
             _context.SaveChanges();
         }
-
-
-        public async Task AddCardAsync(int id)
-        {
-            var response = await _mtgService.GetCardByID(id);
-
-        }
     }
 }

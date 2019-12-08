@@ -98,20 +98,19 @@ namespace MTGCore.Controllers
         [HttpPost]
         public async Task AddToDeckAsync(CardViewModel cardVM)
         {
-            //TODO NEXT: sort outfrontend to display other relevant fields
 
             var deckCard = new DeckCards();
 
-            //TODO: this is expensive you are querying database and trying to get a response from the web service.
             //get card from service
             var card = await _mtgService.GetCardByID(Convert.ToInt32(cardVM.multiverseid));
+
+            //map to dto
+            var model = _mapper.Map<CardDto>(card);
 
             deckCard.CardID = card.id;
             deckCard.DeckID = cardVM.DeckID;
 
-            //insert card into db
-            var model = _mapper.Map<CardDto>(card);
-
+            //insert card into db if it doesnt exist
             var dbCard = _context.Card.Where(x => x.id == card.id).SingleOrDefault();
 
             if (dbCard == null)

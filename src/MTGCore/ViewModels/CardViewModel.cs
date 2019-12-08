@@ -24,9 +24,6 @@ namespace MTGCore.ViewModels
         public int DeckID { get; set; }
         public List<SelectListItem> Decks { get; set; }
 
-        public void AddDeck(List<SelectListItem> decks)
-        {
-            Decks = decks;
-        }
+        public void AddDeck(List<SelectListItem> decks) => Decks = decks;
     }
 }

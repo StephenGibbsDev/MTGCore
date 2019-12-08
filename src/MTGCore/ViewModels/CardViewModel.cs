@@ -6,15 +6,6 @@ namespace MTGCore.ViewModels
 {
     public class CardViewModel
     {
-        public CardViewModel()
-        {
-
-        }
-        public CardViewModel(List<SelectListItem> decks)
-        {
-
-            Decks = decks;
-        }
 
         public string multiverseid { get; set; }
         //TODO: make sure automapper takes an integer of ID not string
@@ -31,8 +22,11 @@ namespace MTGCore.ViewModels
         public string toughness { get; set; }
         public string imageUrl { get; set; }
         public int DeckID { get; set; }
-        public List<SelectListItem> Decks { get;}
+        public List<SelectListItem> Decks { get; set; }
 
-
+        public void AddDeck(List<SelectListItem> decks)
+        {
+            Decks = decks;
+        }
     }
 }

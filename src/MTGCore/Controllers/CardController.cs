@@ -75,11 +75,11 @@ namespace MTGCore.Controllers
                 Text = x.Title,
                 Value = x.Id.ToString()
             }).ToList();
+                
 
-            CardViewModel cardVM = new CardViewModel(selectList);
+            CardViewModel cardVM = _mapper.Map<CardViewModel>(model);
 
-            cardVM.multiverseid = model.multiverseid;
-            cardVM.name = model.name;
+            cardVM.AddDeck(selectList);
 
             if (response == null)
                 return NotFound();

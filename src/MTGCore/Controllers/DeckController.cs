@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
@@ -30,8 +31,40 @@ namespace MTGCore.Controllers
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
-            
+
         }
+
+        [HttpGet]
+        public IActionResult View()
+        {
+            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == 1).ToList();
+            var results = list.GroupBy(g => g.CardID).ToList();
+
+            List<CardAmt> cardAmt = new List<CardAmt>();
+
+            foreach (var group in results)
+            {
+                CardAmt ca1 = new CardAmt();
+                CardDto card = new CardDto();
+                
+                var groupKey = group.Key;
+                ca1.Amount = group.Count();
+
+                foreach (var item in group)
+                {
+                    card = group.FirstOrDefault().Card;
+                    break;
+                }
+                ca1.Card = card;
+                cardAmt.Add(ca1);
+            }
+
+            DeckViewModel deckViewModel = new DeckViewModel() { Cards = cardAmt };
+
+            return View(deckViewModel);
+
+        }
+
 
         public IActionResult Index()
         {
@@ -94,7 +127,7 @@ namespace MTGCore.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+
         [HttpPost]
         public async Task AddToDeckAsync(CardViewModel cardVM)
         {

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MTGCore.Dtos.Models;
+using System.Collections.Generic;
 
-namespace MTGCore.Dtos.Models
+namespace MTGCore.ViewModels
 {
-    public class CardDto
+    public class CardViewModel
     {
+
         public string multiverseid { get; set; }
         //TODO: make sure automapper takes an integer of ID not string
         public string id { get; set; }
@@ -18,5 +21,9 @@ namespace MTGCore.Dtos.Models
         public string power { get; set; }
         public string toughness { get; set; }
         public string imageUrl { get; set; }
+        public int DeckID { get; set; }
+        public List<SelectListItem> Decks { get; set; }
+
+        public void AddDeck(List<SelectListItem> decks) => Decks = decks;
     }
 }

@@ -7,16 +7,17 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MTGCore.Repository
 {
-    public class RepoContext : Microsoft.EntityFrameworkCore.DbContext, IRepoContext
+    public class RepoContext : IdentityDbContext, IRepoContext
     {
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 
-        public virtual DbSet<Cards> Cards { get; set; }
-        public virtual DbSet<Decks> Decks { get; set; }
-        public virtual DbSet<DeckCards> DeckCards { get; set; }
+        public virtual DbSet<CardDto> Card { get; set; }
+        public virtual DbSet<Deck> Deck { get; set; }
+        public virtual DbSet<DeckCards> DeckCards { get; set; } 
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<RepoContext>

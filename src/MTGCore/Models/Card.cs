@@ -20,7 +20,7 @@ namespace MTGCore.Models
         public string text { get; set; }
         public string artist { get; set; }
         public string number { get; set; }
-        public string layout { get; set; }
+        public string layout { get; set; }  
         public int multiverseid { get; set; }
         public string imageUrl { get; set; }
         public List<object> rulings { get; set; }

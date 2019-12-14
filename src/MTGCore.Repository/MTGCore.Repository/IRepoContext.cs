@@ -13,8 +13,8 @@ namespace MTGCore.Repository
     {
         //TODO: theres a way of doing this with generics but cannot figure out a wway to do it.
         //this wwould be preferential as you would only need to add properties in the context and not here as wwell.
-        DbSet<Cards> Cards { get; set; }
-        DbSet<Decks> Decks { get; set; }
+        DbSet<CardDto> Card { get; set; }
+        DbSet<Deck> Deck { get; set; }
         DbSet<DeckCards> DeckCards { get; set; }
 
         int SaveChanges();

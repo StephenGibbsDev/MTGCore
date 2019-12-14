@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MTGCore.Models;
 using MTGCore.Dtos.Models;
+using MTGCore.ViewModels;
 
 namespace MTGCore.Services
 {
@@ -14,8 +15,10 @@ namespace MTGCore.Services
         public MappingProfile()
         {
             //TODO: refactor this, this is gross. Card => CardDto would be ideal...
-            CreateMap<Card,Cards>();
-            CreateMap<Cards, Card>();
+            CreateMap<Card,CardDto>();
+            CreateMap<CardDto, Card>();
+
+            CreateMap<CardDto, CardViewModel>();
         }
 
     }

@@ -6,13 +6,16 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
 using MTGCore.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
 using MTGCore.Services.Interfaces;
+using MTGCore.ViewModels;
 using Newtonsoft.Json;
 
 namespace MTGCore.Controllers
@@ -23,13 +26,15 @@ namespace MTGCore.Controllers
         private IMapper _mapper;
         private readonly IRepoContext _context;
         private readonly IConversionService _conversion;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion)
+        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion, UserManager<IdentityUser> userManager)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
             _context = context;
             _conversion = conversion;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Index(int Page)
@@ -40,7 +45,7 @@ namespace MTGCore.Controllers
 
             response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
 
-            var cardList = _mapper.Map<List<Cards>>(response);
+            var cardList = _mapper.Map<List<CardDto>>(response);
 
             if (response == null)
                 return NotFound();
@@ -53,16 +58,33 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByID(id);
 
-            //string rootPath = _env.WebRootPath;
 
             response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
 
-            var model = _mapper.Map<Cards>(response);
+            var model = _mapper.Map<CardDto>(response);
+
+            var UserIDString = _userManager.GetUserId(HttpContext.User);
+
+            var userId = new Guid(UserIDString);
+
+            var myDecks = _context.Deck.Where(x => x.UserID == userId).ToList();
+
+            var selectList = myDecks.Select(x =>
+            new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            }).ToList();
+                
+
+            CardViewModel cardVM = _mapper.Map<CardViewModel>(model);
+
+            cardVM.AddDeck(selectList);
 
             if (response == null)
                 return NotFound();
 
-            return View(model);
+            return View(cardVM);
         }
     }
 }

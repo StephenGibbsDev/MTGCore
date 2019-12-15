@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MTGCore.Dtos.Models;
@@ -20,7 +21,7 @@ namespace MTGCore.API
         private readonly IConversionService _conversion;
         private IMapper _mapper;
 
-        public SearchController(MTGService mtgservice, IConversionService conversion, IMapper mapper )
+        public SearchController(MTGService mtgservice, IConversionService conversion, IMapper mapper)
         {
             _mtgService = mtgservice;
             _conversion = conversion;
@@ -62,17 +63,17 @@ namespace MTGCore.API
         {
         }
 
+        [EnableCors("MyPolicy")]
+        [HttpPost]
+        public async Task<List<CardDto>> Post([FromBody] FormViewModel form)
+        {
+            var response = await _mtgService.GetCardByName(form.Name);
 
-       [HttpPost]
-       public async Task<List<CardDto>> Post([FromBody] FormViewModel form)
-       {
-           var response = await _mtgService.GetCardByName(form.Name);
+            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
 
-           response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
+            var cardList = _mapper.Map<List<CardDto>>(response);
 
-           var cardList = _mapper.Map<List<CardDto>>(response);
-
-           return cardList;
-       }
+            return cardList;
+        }
     }
 }

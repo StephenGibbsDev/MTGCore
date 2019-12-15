@@ -48,7 +48,6 @@ import axios from "axios";
 
 export default {
   name: "app",
-  props: ['post'],
   computed:{
     ListofCards(){
       return this.post;
@@ -56,7 +55,8 @@ export default {
   },
   data: function() {
     return {
-      Name: ""
+      Name: "",
+      post:null
     };
   },
   components: {

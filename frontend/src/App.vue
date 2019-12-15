@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <HelloWorld msg="this test is amazing"/> -->
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-6">
@@ -23,36 +24,7 @@
                   </div>
                   <small id="emailHelp" class="form-text text-muted">Lorem Ipsum Dolar set ammet</small>
                 </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Card</th>
-                      <th scope="col">Mana</th>
-                      <th scope="col">Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Shock</td>
-                      <td>{R}{1}</td>
-                      <td>instant</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Naturize</td>
-                      <td>{G}{2}</td>
-                      <td>Sorcery</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Ajani's Pridemate</td>
-                      <td>{W}{1}</td>
-                      <td>Cat-Soldier</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <ResultsTable/>
               </form>
             </div>
           </div>
@@ -65,12 +37,14 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import ResultsTable from './components/ResultsTable.vue'
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default {
   name: "app",
   components: {
+    ResultsTable
     // HelloWorld
   }
 };

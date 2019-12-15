@@ -9,35 +9,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Shock</td>
-        <td>{R}{1}</td>
-        <td>instant</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Naturize</td>
-        <td>{G}{2}</td>
-        <td>Sorcery</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Ajani's Pridemate</td>
-        <td>{W}{1}</td>
-        <td>Cat-Soldier</td>
+      <tr v-for="item in items" v-bind:Key="item.Key">
+        <th scope="row">{{item.Key}}</th>
+        <td>{{item.Name}}</td>
+        <td>{{item.ManaCost}}</td>
+        <td>{{item.Type}}</td>
       </tr>
     </tbody>
-    
-    <ul id="example-1">
-      <li v-for="item in items" v-bind:key="item.Key">{{ item.Name }}</li>
-    </ul>
   </table>
 </template>
 
 <script>
 export default {
-  el: "#example-1",
   data: function() {
     return {
       items: [

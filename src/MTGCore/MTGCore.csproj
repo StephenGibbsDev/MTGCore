@@ -28,4 +28,9 @@
     <ProjectReference Include="..\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,5 @@
   <template>
   <table class="table">
-      hellothere
     <thead>
       <tr>
         <th scope="col">#</th>

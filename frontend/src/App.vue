@@ -29,7 +29,7 @@
                   </div>
                   <small id="emailHelp" class="form-text text-muted">Lorem Ipsum Dolar set ammet</small>
                 </div>
-                <ResultsTable v-for="post in posts" v-bind:key="post.id" v-bind:post="post"/>
+                <ResultsTable v-bind:post="post"/>
               </form>
             </div>
           </div>
@@ -49,6 +49,11 @@ import axios from "axios";
 export default {
   name: "app",
   props: ['post'],
+  computed:{
+    ListofCards(){
+      return this.post;
+    }
+  },
   data: function() {
     return {
       Name: ""

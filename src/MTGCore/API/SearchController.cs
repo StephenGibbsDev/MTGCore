@@ -73,7 +73,6 @@ namespace MTGCore.API
            var cardList = _mapper.Map<List<CardDto>>(response);
 
            return cardList;
-           //return "hellothere";
        }
     }
 }

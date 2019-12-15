@@ -8,18 +8,20 @@
             <div class="card-body">
               <form>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                  />
-                  <small
-                    id="emailHelp"
-                    class="form-text text-muted"
-                  >We'll never share your email with anyone else.</small>
+                  <label for="exampleInputEmail1">Search for card</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Search"
+                      aria-label="Card Name"
+                      aria-describedby="basic-addon2"
+                    />
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button">Button</button>
+                    </div>
+                  </div>
+                  <small id="emailHelp" class="form-text text-muted">Lorem Ipsum Dolar set ammet</small>
                 </div>
                 <table class="table">
                   <thead>

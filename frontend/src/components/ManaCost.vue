@@ -13,12 +13,13 @@ props: ['manaCost'],
 methods:{
     convertMana: function(manaCost){
         //implement mana conversion here
+        var t1= manaCost;
 
-        
+        return t1;
     }
 },
       created: function(){
-        this.convertMana(manaCost)
+        this.convertMana()
       }
 };
 </script>

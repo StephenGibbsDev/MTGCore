@@ -12,7 +12,9 @@
       <tr v-for="item in post" v-bind:Key="item.multiverseid">
         <th scope="row">{{item.multiverseid}}</th>
         <td>{{item.name}}</td>
-        <td>{{item.manaCost}}</td>
+        <td>
+          <ManaCost :manaCost="item.manaCost"/>
+        </td>
         <td>{{item.type}}</td>
       </tr>
     </tbody>
@@ -20,21 +22,12 @@
 </template>
 
 <script>
+import ManaCost from "./ManaCost.vue";
+
 export default {
-  props:['post']
-//   data: function() {
-//     return {
-//       items: [
-//         { Key: 1, Name: "Shock", ManaCost: "{R}{1}", Type: "Instant" },
-//         { Key: 2, Name: "Naturize", ManaCost: "{G}{2}", Type: "Sorcery" },
-//         {
-//           Key: 3,
-//           Name: "Ajani's Pridemate",
-//           ManaCost: "{W}{1}",
-//           Type: "Cat-Soldier"
-//         }
-//       ]
-//     };
-//   }
+  props: ["post"],
+  components: {
+    ManaCost
+  }
 };
 </script>

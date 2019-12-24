@@ -46,15 +46,12 @@ namespace MTGCore.Controllers
             {
                 CardAmt ca1 = new CardAmt();
                 CardDto card = new CardDto();
-                
+
                 var groupKey = group.Key;
                 ca1.Amount = group.Count();
 
-                foreach (var item in group)
-                {
-                    card = group.FirstOrDefault().Card;
-                    break;
-                }
+                card = group.FirstOrDefault().Card;
+
                 ca1.Card = card;
                 cardAmt.Add(ca1);
             }

@@ -87,20 +87,23 @@ export default {
         .catch(err => {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
+    },
+    updateDeckList() {
+      axios({
+        method: "get",
+        url: "https://localhost:44305/api/Deck/1",
+        data: this.$data
+      })
+        .then(res => {
+          this.deckCards = res.data;
+        })
+        .catch(err => {
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     }
   },
-  beforeMount() {
-    axios({
-      method: "get",
-      url: "https://localhost:44305/api/Deck/1",
-      data: this.$data
-    })
-      .then(res => {
-        this.deckCards = res.data;
-      })
-      .catch(err => {
-        alert(`There was an error submitting your form. See details: ${err}`);
-      });
+  mounted() {
+    this.updateDeckList();
   }
 };
 </script>

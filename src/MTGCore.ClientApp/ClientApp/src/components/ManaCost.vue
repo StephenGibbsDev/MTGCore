@@ -1,5 +1,5 @@
   <template>
-  <span>{{manaCost}}</span>
+      <span>{{convertedManaCost}}</span>
   </template>
   
 <script>
@@ -11,9 +11,9 @@ props: ['manaCost'],
 methods:{
     convertMana: function(manaCost){
         //implement mana conversion here
-        var t1= manaCost;
-
-        return t1;
+        var convertedManaCost = manaCost.replace(/{(\w)}/g, "~/MTGCore/wwwroot/images/${match[0]}.svg");
+        //console.log("${ manaCost } ${ t1 }");
+        return convertedManaCost;
     }
 },
       created: function(){

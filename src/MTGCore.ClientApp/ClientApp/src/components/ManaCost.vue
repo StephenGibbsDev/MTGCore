@@ -1,23 +1,18 @@
-  <template>
-      <span>{{convertedManaCost}}</span>
-  </template>
-  
+<template>
+    <span v-html="convertedManaCost"></span>
+</template>
+
 <script>
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-export default {
-    
-props: ['manaCost'],
-methods:{
-    convertMana: function(manaCost){
-        //implement mana conversion here
-        var convertedManaCost = manaCost.replace(/{(\w)}/g, "~/MTGCore/wwwroot/images/${match[0]}.svg");
-        //console.log("${ manaCost } ${ t1 }");
-        return convertedManaCost;
-    }
-},
-      created: function(){
-        this.convertMana()
-      }
-};
+    import "bootstrap";
+    import "bootstrap/dist/css/bootstrap.min.css";
+    export default {
+
+        props: ['manaCost'],
+        computed: {
+            convertedManaCost: function () {
+                /* TODO: Look at moving images to ClientApp assets to allow use of a relative URL https://localhost:44305/images/$1.svg */
+                return this.manaCost.replace(/{(\w)}/g, '<img :src="Require(\'@/assets/mana_images/$1.svg\')" height="20" width="20" />');
+            }
+        }
+    };
 </script>

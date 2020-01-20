@@ -21,6 +21,141 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\0.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\1.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\10.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\11.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\12.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2B.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2G.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2R.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2U.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\2W.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\3.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\4.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\5.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\6.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\7.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\8.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\9.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\B.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\C.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\G.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\R.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\U.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\W.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\public\mana_images\X.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\0.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\1.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\10.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\11.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\12.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2B.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2G.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2R.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2U.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\2W.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\3.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\4.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\5.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\6.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\7.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\8.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\9.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\B.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\C.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\G.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\R.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\U.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\W.svg" />
+    <None Include="..\..\..\..\..\Program Files %2528x86%2529\Github\MTGCore\src\MTGCore.ClientApp\ClientApp\src\assets\mana_images\X.svg" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

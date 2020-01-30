@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using MTGCore.Dtos;
 using MTGCore.Dtos.Models;
-using System;
 using System.IO;
-using Microsoft.Extensions.Configuration.FileExtensions;
-using Microsoft.Extensions.Configuration.Json;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MTGCore.Repository

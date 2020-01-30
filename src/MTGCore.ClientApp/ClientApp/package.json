@@ -6,9 +6,10 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "mochapack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js"
+    "test": "mochapack --require src/test/setup.js src/test/**/*.spec.js"
   },
   "dependencies": {
+    "@vue/cli-plugin-unit-mocha": "^4.1.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "core-js": "^3.4.3",

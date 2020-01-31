@@ -29,12 +29,19 @@
                   </div>
                   <small id="emailHelp" class="form-text text-muted">Lorem Ipsum Dolar set ammet</small>
                 </div>
-                <ResultsTable v-bind:post="post"/>
+                <ResultsTable v-bind:post="post" />
               </form>
             </div>
           </div>
         </div>
-        <div class="col-lg-6">decks ting</div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">Cards in Deck</div>
+            <div class="card-body">
+              <DeckCardList v-bind:deckCards="deckCards" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,25 +49,28 @@
 
 <script>
 import ResultsTable from "./components/ResultsTable.vue";
+import DeckCardList from "./components/DeckCardList.vue";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 export default {
   name: "app",
-  computed:{
-    ListofCards(){
+  computed: {
+    ListofCards() {
       return this.post;
     }
   },
   data: function() {
     return {
       Name: "",
-      post:null
+      post: null,
+      deckCards: null
     };
   },
   components: {
-    ResultsTable
+    ResultsTable,
+    DeckCardList
     // HelloWorld
   },
   methods: {
@@ -77,7 +87,23 @@ export default {
         .catch(err => {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
+    },
+    updateDeckList() {
+      axios({
+        method: "get",
+        url: "https://localhost:44305/api/Deck/1",
+        data: this.$data
+      })
+        .then(res => {
+          this.deckCards = res.data;
+        })
+        .catch(err => {
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     }
+  },
+  mounted() {
+    this.updateDeckList();
   }
 };
 </script>

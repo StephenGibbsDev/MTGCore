@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-MTGCore-18D6CC85-FDCE-4E54-8163-F0C947DFCF6F</UserSecretsId>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

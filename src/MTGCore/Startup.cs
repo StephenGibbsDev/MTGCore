@@ -56,6 +56,14 @@ namespace MTGCore
             services.AddRazorPages();
             services.AddHttpClient<MTGService>();
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -85,9 +93,12 @@ namespace MTGCore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("MyPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -35,6 +35,20 @@ namespace MTGCore.Services
             return singleCard;
         }
 
+        public async Task<List<Card>> GetCardByName(string name)
+        {
+            var result = await _client.GetAsync($"cards?name={name}");
+
+            if (!result.IsSuccessStatusCode)
+                return default;
+
+            var stream = await result.Content.ReadAsStringAsync();
+
+            var cardList = JsonConvert.DeserializeObject<RootObject>(stream).cards;
+
+            return cardList;
+        }
+
         public async Task<List<Card>> GetCardsByPage(int PageID)
         {
             var result = await _client.GetAsync($"cards?page={PageID}");

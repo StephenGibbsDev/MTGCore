@@ -29,7 +29,7 @@ namespace MTGCore.Proxy.Controllers
         {
             //https://localhost:44305/card/Details?id=397641
 
-            var path = Request.Path;
+            var path = Request.Path + Request.QueryString;
 
             var hashedPath = CalculateMD5Hash(path);
 

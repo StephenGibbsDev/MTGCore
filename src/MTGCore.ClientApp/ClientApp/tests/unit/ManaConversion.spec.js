@@ -22,4 +22,8 @@ describe("ManaCost.vue", () => {
         expect(images.at(0).html()).toMatch('<img src=\"2.svg\" width="20" height="20">');
         expect(images.at(1).html()).toMatch('<img src=\"W.svg\" width="20" height="20">');
     });
+
+    it("this test will fail", () => {
+        expect(1).toBe(2);
+    })
 });

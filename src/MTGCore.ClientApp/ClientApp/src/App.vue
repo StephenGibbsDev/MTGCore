@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="card-body">
-              <DeckCardList v-bind:deckCards="deckCards" />
+              <DeckCardList v-model="deckCards" />
             </div>
           </div>
         </div>
@@ -100,7 +100,8 @@ export default {
     updateDeckCardList() {
       axios({
         method: "get",
-        url: "https://localhost:44305/api/Deck/1",
+        //todo: make this call based on the selected dropdown ID
+        url: "https://localhost:44305/api/Deck/3",
         data: this.$data
       })
         .then(res => {

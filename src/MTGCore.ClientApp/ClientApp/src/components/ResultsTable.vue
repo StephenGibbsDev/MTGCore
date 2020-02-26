@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in post" v-bind:Key="item.multiverseid">
+      <tr v-for="item in post" v-bind:Key="item.id">
         <th scope="row">{{item.multiverseid}}</th>
         <td>{{item.name}}</td>
         <td>
@@ -19,7 +19,7 @@
         <td>{{item.type}}</td>
         <td>
           <button
-            v-on:click="addToDeck(item.multiverseid)"
+            v-on:click="addToDeck(item.id)"
             type="button"
             class="btn btn-success"
           >Add</button>
@@ -42,7 +42,7 @@ export default {
     addToDeck(id) {
       axios({
         method: "post",
-        url: `https://localhost:44305/api/Deck/Add/1/${id}`,
+        url: `https://localhost:44305/api/Deck/Add/3/${id}`,
         data: this.$data
       })
         .then(() => {

@@ -36,7 +36,14 @@
         </div>
         <div class="col-lg-6">
           <div class="card">
-            <div class="card-header">Cards in Deck</div>
+            <div class="card-header">
+              <div class="row">
+                <div class="col-lg-6">Cards in Deck</div>
+                <div class="col-lg-6">
+                  <DeckList />
+                </div>
+              </div>
+            </div>
             <div class="card-body">
               <DeckCardList v-bind:deckCards="deckCards" />
             </div>
@@ -50,6 +57,8 @@
 <script>
 import ResultsTable from "./components/ResultsTable.vue";
 import DeckCardList from "./components/DeckCardList.vue";
+import DeckList from "./components/DeckList.vue";
+
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -70,8 +79,8 @@ export default {
   },
   components: {
     ResultsTable,
-    DeckCardList
-    // HelloWorld
+    DeckCardList,
+    DeckList
   },
   methods: {
     SubmitForm() {

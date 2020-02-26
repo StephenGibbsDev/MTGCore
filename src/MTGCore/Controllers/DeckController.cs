@@ -132,7 +132,7 @@ namespace MTGCore.Controllers
             var deckCard = new DeckCards();
 
             //get card from service
-            var card = await _mtgService.GetCardByID(Convert.ToInt32(cardVM.multiverseid));
+            var card = await _mtgService.GetCardByMultiverseID(Convert.ToInt32(cardVM.multiverseid));
 
             //map to dto
             var model = _mapper.Map<CardDto>(card);

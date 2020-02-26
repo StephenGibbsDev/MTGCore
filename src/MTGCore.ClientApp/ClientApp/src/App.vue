@@ -40,7 +40,7 @@
               <div class="row">
                 <div class="col-lg-6">Cards in Deck</div>
                 <div class="col-lg-6">
-                  <DeckList />
+                  <DeckList v-bind:deckList="deckList" />
                 </div>
               </div>
             </div>

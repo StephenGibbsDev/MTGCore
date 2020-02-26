@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import DeckList from "../../src/components/DeckList.vue";
 
-describe("ManaCost.vue", () => {
+describe("DeckList.vue", () => {
    var deckList = [{ "id":1, "title":"RDW" },{ "id":2, "title":"jank" }];
 
     const wrapper = shallowMount(DeckList, {

@@ -57,6 +57,12 @@ namespace MTGCore.API
 
         }
 
+        [HttpGet]
+        public List<Deck> Get()
+        {
+            return _context.Deck.ToList();
+        }
+
         [Route("{Id}")]
         [HttpGet]
         public async Task<DeckViewModel>Get(int Id)

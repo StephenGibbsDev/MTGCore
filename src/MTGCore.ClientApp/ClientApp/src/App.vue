@@ -74,7 +74,8 @@ export default {
     return {
       Name: "",
       post: null,
-      deckCards: null
+      deckCards: null,
+      deckList:null
     };
   },
   components: {
@@ -90,14 +91,13 @@ export default {
         data: this.$data
       })
         .then(res => {
-          alert("Successfully submitted feedback form");
           this.post = res.data;
         })
         .catch(err => {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
     },
-    updateDeckList() {
+    updateDeckCardList() {
       axios({
         method: "get",
         url: "https://localhost:44305/api/Deck/1",
@@ -109,9 +109,23 @@ export default {
         .catch(err => {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
+    },
+    updateDeckList(){
+            axios({
+        method: "get",
+        url: "https://localhost:44305/api/Deck",
+        data: this.$data
+      })
+        .then(res => {
+          this.deckList = res.data;
+        })
+        .catch(err => {
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     }
   },
   mounted() {
+    this.updateDeckCardList();
     this.updateDeckList();
   }
 };

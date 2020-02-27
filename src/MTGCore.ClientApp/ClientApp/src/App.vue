@@ -29,7 +29,7 @@
                   </div>
                   <small id="emailHelp" class="form-text text-muted">Lorem Ipsum Dolar set ammet</small>
                 </div>
-                <ResultsTable v-bind:post="post" />
+                <ResultsTable v-on:addCardToDeck="addToDeck" v-bind:post="post" />
               </form>
             </div>
           </div>
@@ -40,7 +40,10 @@
               <div class="row">
                 <div class="col-lg-6">Cards in Deck</div>
                 <div class="col-lg-6">
-                  <DeckList v-on:triggerChange="updateDeckCardListListener" v-bind:deckList="deckList" />
+                  <DeckList
+                    v-on:triggerChange="updateDeckCardList"
+                    v-bind:deckList="deckList"
+                  />
                 </div>
               </div>
             </div>
@@ -75,8 +78,8 @@ export default {
       Name: "",
       post: null,
       deckCards: null,
-      deckList:null,
-      selectedDeck:null
+      deckList: null,
+      selectedDeck: null
     };
   },
   components: {
@@ -85,8 +88,18 @@ export default {
     DeckList
   },
   methods: {
-    updateDeckCardListListener(event){
-       this.updateDeckCardList(event);
+    addToDeck(id) {
+      axios({
+        method: "post",
+        url: `https://localhost:44305/api/Deck/Add/${this.selectedDeck}/${id}`,
+        data: this.$data
+      })
+        .then(() => {
+         this.updateDeckCardList(this.selectedDeck);
+        })
+        .catch(err => {
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     },
     SubmitForm() {
       axios({
@@ -102,6 +115,7 @@ export default {
         });
     },
     updateDeckCardList(id) {
+      this.selectedDeck = id;
       axios({
         method: "get",
         //todo: make this call based on the selected dropdown ID
@@ -115,8 +129,8 @@ export default {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
     },
-    updateDeckList(){
-            axios({
+    updateDeckList() {
+      axios({
         method: "get",
         url: "https://localhost:44305/api/Deck",
         data: this.$data
@@ -130,15 +144,8 @@ export default {
     }
   },
   mounted() {
-    this.updateDeckCardList('3');
+    this.updateDeckCardList(this.selectedDeck);
     this.updateDeckList();
   }
 };
 </script>
-
-<style>
-/* .row > div {
-  background: lightgrey;
-  border: 1px solid grey;
-} */
-</style>

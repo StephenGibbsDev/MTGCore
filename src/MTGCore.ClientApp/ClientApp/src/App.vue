@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="card-body">
-              <DeckCardList v-bind="deckCards" />
+              <DeckCardList v-bind:deckCards="deckCards" />
             </div>
           </div>
         </div>

@@ -27,12 +27,12 @@ describe("DeckList.vue", () => {
 
     it("renders the RDW option for first value", () => {
         const options = wrapper.findAll("option");
-        expect(options.at(0).html()).toMatch('<option key="1">RDW</option>')
+        expect(options.at(0).html()).toMatch('<option key=\"1\" value=\"1\">RDW</option>')
     });
 
     it("renders the jank option for second value", () => {
         const options = wrapper.findAll("option");
-        expect(options.at(1).html()).toMatch('<option key="2">jank</option>')
+        expect(options.at(1).html()).toMatch('<option key=\"2\" value=\"2\">jank</option>')
     });
 
 });

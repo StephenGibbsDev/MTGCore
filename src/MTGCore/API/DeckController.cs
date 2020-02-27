@@ -68,7 +68,7 @@ namespace MTGCore.API
         public async Task<DeckViewModel>Get(int Id)
         {
 
-            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == 3).ToList();
+            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == Id).ToList();
             var results = list.GroupBy(g => g.CardID).ToList();
 
             List<CardAmt> cardAmt = new List<CardAmt>();

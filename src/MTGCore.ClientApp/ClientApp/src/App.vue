@@ -40,12 +40,12 @@
               <div class="row">
                 <div class="col-lg-6">Cards in Deck</div>
                 <div class="col-lg-6">
-                  <DeckList v-bind:deckList="deckList" />
+                  <DeckList v-on:triggerChange="updateDeckCardListListener" v-bind:deckList="deckList" />
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <DeckCardList v-model="deckCards" />
+              <DeckCardList v-bind="deckCards" />
             </div>
           </div>
         </div>
@@ -75,7 +75,8 @@ export default {
       Name: "",
       post: null,
       deckCards: null,
-      deckList:null
+      deckList:null,
+      selectedDeck:null
     };
   },
   components: {
@@ -84,6 +85,9 @@ export default {
     DeckList
   },
   methods: {
+    updateDeckCardListListener(event){
+       this.updateDeckCardList(event);
+    },
     SubmitForm() {
       axios({
         method: "post",
@@ -97,11 +101,11 @@ export default {
           alert(`There was an error submitting your form. See details: ${err}`);
         });
     },
-    updateDeckCardList() {
+    updateDeckCardList(id) {
       axios({
         method: "get",
         //todo: make this call based on the selected dropdown ID
-        url: "https://localhost:44305/api/Deck/3",
+        url: `https://localhost:44305/api/Deck/${id}`,
         data: this.$data
       })
         .then(res => {
@@ -126,7 +130,7 @@ export default {
     }
   },
   mounted() {
-    this.updateDeckCardList();
+    this.updateDeckCardList('3');
     this.updateDeckList();
   }
 };

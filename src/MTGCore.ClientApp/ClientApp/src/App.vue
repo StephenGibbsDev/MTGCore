@@ -54,6 +54,7 @@
         </div>
       </div>
     </div>
+        <router-view></router-view>
   </div>
 </template>
 
@@ -61,6 +62,7 @@
 import ResultsTable from "./components/ResultsTable.vue";
 import DeckCardList from "./components/DeckCardList.vue";
 import DeckList from "./components/DeckList.vue";
+
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

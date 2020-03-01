@@ -15,6 +15,7 @@ namespace MTGCore.Repository
         //this wwould be preferential as you would only need to add properties in the context and not here as wwell.
         DbSet<CardDto> Card { get; set; }
         DbSet<Deck> Deck { get; set; }
+        DbSet<User> User { get; set; }
         DbSet<DeckCards> DeckCards { get; set; }
 
         int SaveChanges();

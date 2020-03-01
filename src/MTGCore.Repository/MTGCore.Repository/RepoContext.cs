@@ -12,6 +12,7 @@ namespace MTGCore.Repository
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 
         public virtual DbSet<CardDto> Card { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Deck> Deck { get; set; }
         public virtual DbSet<DeckCards> DeckCards { get; set; } 
     }

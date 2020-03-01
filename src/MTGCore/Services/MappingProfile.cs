@@ -19,6 +19,8 @@ namespace MTGCore.Services
             CreateMap<CardDto, Card>();
 
             CreateMap<CardDto, CardViewModel>();
+
+            CreateMap<RegisterModel, User>();
         }
 
     }

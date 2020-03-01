@@ -80,6 +80,15 @@ namespace MTGCore.API
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("secure")]
+        [Authorize]
+        public IActionResult Secure()
+        {
+
+            var t1 = User.Identity.Name;
+            return Ok();
+        }
     }
 
 

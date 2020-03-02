@@ -92,7 +92,7 @@ namespace MTGCore.API
             return deckViewModel;
         }
 
-        [Route("New/{title}")]
+        [Route("New")]
         [HttpPost]
         public int? AddNewDeck(string title)
         {

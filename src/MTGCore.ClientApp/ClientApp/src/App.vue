@@ -45,6 +45,7 @@
                     v-on:triggerChange="updateDeckCardList"
                     v-on:addDeck="addNewDeck"
                     v-bind:deckList="deckList"
+                    v-bind:selectedOption="selectedDeck"
                   />
                 </div>
               </div>
@@ -91,15 +92,21 @@
         },
         methods: {
             addNewDeck(title) {
+                var params = new URLSearchParams();
+                params.append('title', title);
+
                 axios({
                     method: "post",
-                    url: `https://localhost:44305/api/Deck/New/${title}`,
-                    data: this.$data
+                    url: `https://localhost:44305/api/Deck/New`,
+                    data: params
                 })
                     .then(res => {
                         this.updateDeckCardList(res.data);
                         this.updateDeckList();
-                        this.$refs.deckListRef.selectedOption = res.data;
+                        // Set selected dropdown value to new deck ID
+                        this.selectedDeck = res.data;
+                        // Set textbox val back to empty string
+                        this.$refs.deckListRef.deckname = '';
                     })
                     .catch(err => {
                         alert(`There was an error submitting your form. See details: ${err}`);

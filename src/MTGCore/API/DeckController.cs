@@ -91,5 +91,22 @@ namespace MTGCore.API
 
             return deckViewModel;
         }
+
+        [Route("New/{title}")]
+        [HttpPost]
+        public int? AddNewDeck(string title)
+        {
+            var deck = _context.Deck.Where(m => m.Title == title).SingleOrDefault();
+
+            if(deck != null)
+            {
+                throw new Exception("Deck with that name already exists!");
+            }
+
+            Deck newDeck = new Deck() { Title = title };
+            _context.Deck.Add(newDeck);
+            _context.SaveChanges();
+            return newDeck.Id;
+        }
     }
 }

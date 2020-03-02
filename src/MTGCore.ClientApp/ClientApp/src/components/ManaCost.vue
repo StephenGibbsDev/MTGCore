@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span v-for="mana in manaArray" v-bind:key="mana">
+        <span v-for="(mana, index) in manaArray" v-bind:key="`${mana}[${index}]`">
             <img :src="require(`../assets/images/${mana}.svg`)" width="20" height="20" />
         </span>
     </div>

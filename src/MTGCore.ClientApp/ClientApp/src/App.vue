@@ -41,7 +41,9 @@
                 <div class="col-lg-6">Cards in Deck</div>
                 <div class="col-lg-6">
                   <DeckList
+                    ref="deckListRef"
                     v-on:triggerChange="updateDeckCardList"
+                    v-on:addDeck="addNewDeck"
                     v-bind:deckList="deckList"
                   />
                 </div>
@@ -58,94 +60,109 @@
 </template>
 
 <script>
-import ResultsTable from "./components/ResultsTable.vue";
-import DeckCardList from "./components/DeckCardList.vue";
-import DeckList from "./components/DeckList.vue";
+    import ResultsTable from "./components/ResultsTable.vue";
+    import DeckCardList from "./components/DeckCardList.vue";
+    import DeckList from "./components/DeckList.vue";
 
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
+    import "bootstrap";
+    import "bootstrap/dist/css/bootstrap.min.css";
+    import axios from "axios";
 
-export default {
-  name: "app",
-  computed: {
-    ListofCards() {
-      return this.post;
-    }
-  },
-  data: function() {
-    return {
-      Name: "",
-      post: null,
-      deckCards: null,
-      deckList: null,
-      selectedDeck: null
+    export default {
+        name: "app",
+        computed: {
+            ListofCards() {
+                return this.post;
+            }
+        },
+        data: function () {
+            return {
+                Name: "",
+                post: null,
+                deckCards: null,
+                deckList: null,
+                selectedDeck: null
+            };
+        },
+        components: {
+            ResultsTable,
+            DeckCardList,
+            DeckList
+        },
+        methods: {
+            addNewDeck(title) {
+                axios({
+                    method: "post",
+                    url: `https://localhost:44305/api/Deck/New/${title}`,
+                    data: this.$data
+                })
+                    .then(res => {
+                        this.updateDeckCardList(res.data);
+                        this.updateDeckList();
+                        this.$refs.deckListRef.selectedOption = res.data;
+                    })
+                    .catch(err => {
+                        alert(`There was an error submitting your form. See details: ${err}`);
+                    });
+            },
+            addToDeck(id) {
+                axios({
+                    method: "post",
+                    url: `https://localhost:44305/api/Deck/Add/${this.selectedDeck}/${id}`,
+                    data: this.$data
+                })
+                    .then(() => {
+                        this.updateDeckCardList(this.selectedDeck);
+                    })
+                    .catch(err => {
+                        alert(`There was an error submitting your form. See details: ${err}`);
+                    });
+            },
+            SubmitForm() {
+                axios({
+                    method: "post",
+                    url: "https://localhost:44305/api/Search/",
+                    data: this.$data
+                })
+                    .then(res => {
+                        this.post = res.data;
+                    })
+                    .catch(err => {
+                        alert(`There was an error submitting your form. See details: ${err}`);
+                    });
+            },
+            updateDeckCardList(id) {
+                this.selectedDeck = id;
+                axios({
+                    method: "get",
+                    //todo: make this call based on the selected dropdown ID
+                    url: `https://localhost:44305/api/Deck/${id}`,
+                    data: this.$data
+                })
+                    .then(res => {
+                        this.deckCards = res.data;
+                    })
+                    .catch(err => {
+                        alert(`There was an error submitting your form. See details: ${err}`);
+                    });
+            },
+            updateDeckList() {
+                axios({
+                    method: "get",
+                    url: "https://localhost:44305/api/Deck",
+                    data: this.$data
+                })
+                    .then(res => {
+                        this.deckList = res.data;
+                    })
+                    .catch(err => {
+                        alert(`There was an error submitting your form. See details: ${err}`);
+                    });
+            }
+        },
+        mounted() {
+            this.updateDeckCardList(this.selectedDeck);
+            this.updateDeckList();
+        }
     };
-  },
-  components: {
-    ResultsTable,
-    DeckCardList,
-    DeckList
-  },
-  methods: {
-    addToDeck(id) {
-      axios({
-        method: "post",
-        url: `https://localhost:44305/api/Deck/Add/${this.selectedDeck}/${id}`,
-        data: this.$data
-      })
-        .then(() => {
-         this.updateDeckCardList(this.selectedDeck);
-        })
-        .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
-        });
-    },
-    SubmitForm() {
-      axios({
-        method: "post",
-        url: "https://localhost:44305/api/Search/",
-        data: this.$data
-      })
-        .then(res => {
-          this.post = res.data;
-        })
-        .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
-        });
-    },
-    updateDeckCardList(id) {
-      this.selectedDeck = id;
-      axios({
-        method: "get",
-        //todo: make this call based on the selected dropdown ID
-        url: `https://localhost:44305/api/Deck/${id}`,
-        data: this.$data
-      })
-        .then(res => {
-          this.deckCards = res.data;
-        })
-        .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
-        });
-    },
-    updateDeckList() {
-      axios({
-        method: "get",
-        url: "https://localhost:44305/api/Deck",
-        data: this.$data
-      })
-        .then(res => {
-          this.deckList = res.data;
-        })
-        .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
-        });
-    }
-  },
-  mounted() {
-    this.updateDeckCardList(this.selectedDeck);
-    this.updateDeckList();
-  }
-};
 </script>

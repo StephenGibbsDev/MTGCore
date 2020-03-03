@@ -22,7 +22,7 @@ namespace MTGCore.Tests
             var client = mockHttp.ToHttpClient();
 
             var mtgservice = new MTGService(client);
-            var user = await mtgservice.GetCardByID(74208);
+            var user = await mtgservice.GetCardByMultiverseID(74208);
 
             user.name.ShouldBe("TestyCard");
         }

@@ -29,27 +29,24 @@ namespace MTGCore.API
         }
 
         //api/deck/
-        [Route("Add/{deckID}/{multiverseID}")]
+        [Route("Add/{deckID}/{cardID}")]
         [HttpPost]
-        public async Task Post(int deckID, int multiverseID)
+        public async Task Post(int deckID, string cardID)
         {
 
             var deckCard = new DeckCards();
 
-            //get card from service
-            var card = await _mtgService.GetCardByID(multiverseID);
-
-            //map to dto
-            var model = _mapper.Map<CardDto>(card);
-
-            deckCard.CardID = card.id;
+            deckCard.CardID = cardID;
             deckCard.DeckID = deckID;
 
+            // cant make this block async as the _context.deckcards.add rely on a card in the database
             //insert card into db if it doesnt exist
-            var dbCard = _context.Card.Where(x => x.id == card.id).SingleOrDefault();
-
+            var dbCard = _context.Card.Where(x => x.id == cardID).SingleOrDefault();
             if (dbCard == null)
             {
+                var card = await _mtgService.GetCardByID(cardID);
+                var model = _mapper.Map<CardDto>(card);
+
                 _context.Card.Add(model);
                 _context.SaveChanges();
             };
@@ -60,12 +57,18 @@ namespace MTGCore.API
 
         }
 
+        [HttpGet]
+        public List<Deck> Get()
+        {
+            return _context.Deck.ToList();
+        }
+
         [Route("{Id}")]
         [HttpGet]
         public async Task<DeckViewModel>Get(int Id)
         {
 
-            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == 1).ToList();
+            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == Id).ToList();
             var results = list.GroupBy(g => g.CardID).ToList();
 
             List<CardAmt> cardAmt = new List<CardAmt>();

@@ -21,7 +21,7 @@ namespace MTGCore.Services
             _client.BaseAddress = new Uri(_baseUrl);
         }
 
-        public async Task<Card> GetCardByID(int multiverseID)
+        public async Task<Card> GetCardByMultiverseID(int multiverseID)
         {
             var result = await _client.GetAsync($"cards/{multiverseID}  ");
 
@@ -34,6 +34,21 @@ namespace MTGCore.Services
 
             return singleCard;
         }
+
+        public async Task<Card> GetCardByID(string Id)
+        {
+            var result = await _client.GetAsync($"cards/{Id}");
+
+            if (!result.IsSuccessStatusCode)
+                return default;
+
+            var stream = await result.Content.ReadAsStringAsync();
+
+            var singleCard = JsonConvert.DeserializeObject<RootObject>(stream).card;
+
+            return singleCard;
+        }
+
 
         public async Task<List<Card>> GetCardByName(string name)
         {

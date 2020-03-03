@@ -56,7 +56,7 @@ namespace MTGCore.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var response = await _mtgService.GetCardByID(id);
+            var response = await _mtgService.GetCardByMultiverseID(id);
 
 
             response.manaCost = _conversion.ConvertToSymbol(response.manaCost);

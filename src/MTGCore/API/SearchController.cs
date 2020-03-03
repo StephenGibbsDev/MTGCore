@@ -34,8 +34,6 @@ namespace MTGCore.API
         {
             var response = await _mtgService.GetCardByName(form.Name);
 
-            //response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
-
             var cardList = _mapper.Map<List<CardDto>>(response);
 
             return cardList;

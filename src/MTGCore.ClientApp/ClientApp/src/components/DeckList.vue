@@ -52,7 +52,7 @@
             },
             adddeckclick: function () {
                 document.getElementById('btnCloseTitleModal').click();
-                this.$emit("addDeck", this.deckname)
+                this.$emit("addDeck", this.deckname);
             }
         },
         events: {

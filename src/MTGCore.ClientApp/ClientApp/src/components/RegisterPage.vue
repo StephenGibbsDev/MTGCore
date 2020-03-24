@@ -8,25 +8,29 @@
               <h2>Register</h2>
               <form>
                 <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter email" />
+                  <label for="Username">Username</label>
+                  <input type="text" class="form-control" id="Username" placeholder="Enter Username" />
                 </div>
                 <div class="form-group">
-                  <label for="firstname">First Name</label>
+                  <label for="FirstName">First Name</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="firstname"
+                    id="FirstName"
                     placeholder="Enter firstname"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="Enter surname" />
+                  <label for="LastName">Surname</label>
+                  <input type="text" class="form-control" id="LastName" placeholder="Enter LastName" />
                 </div>
                 <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password" />
+                  <label for="Password">Password</label>
+                  <input type="password" class="form-control" id="Password" placeholder="Password" />
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary">Register</button>
+                  <router-link to="/login" class="btn btn-link">Cancel</router-link>
                 </div>
               </form>
             </div>

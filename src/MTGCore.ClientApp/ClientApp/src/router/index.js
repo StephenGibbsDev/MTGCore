@@ -1,47 +1,36 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import about from '../views/About.vue'
+import Router from 'vue-router'
 
-Vue.use(VueRouter)
+import Builder from '../components/Builder'
+import LoginPage from '../components/LoginPage'
+import RegisterPage from '../components/RegisterPage'
 
-const routes = [
-  {
-    path: '/about',
-    name: 'about',
-    component: about,
-    meta: {
-      requiresAuth: true
-    },
-  }
-]
+Vue.use(Router)
 
-let router = new VueRouter({
+export const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+  routes: [
+    { path: '/', component: Builder },
+    { path: '/login', component: LoginPage },
+    { path: '/register', component: RegisterPage },
+
+    // otherwise redirect to home
+    { path: '*', redirect: '/' }
+  ]
+});
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  next();
 })
 
 
-router.beforeEach(async (to, from, next) => {
-  let app = router.app.$data || {isAuthenticated: false};
-  let authenticate = router.app.$options.methods.authenticate
-  // console.log(authenticate)
-  // // console.log(router)
-  // // console.log(router.app)
-  // // console.log(router.app.authenticate)
-  if (app.isAuthenticated) {
-    //already signed in, we can navigate anywhere
-    next()
-  } else if (to.matched.some(record => record.meta.requiresAuth)) {
-    //authentication is required. Trigger the sign in process, including the return URI
-    authenticate(to.path).then(() => {
-      console.log('authenticating a protected url:' + to.path);
-      next();
-    });
-  } else {
-    //No auth required. We can navigate
-    next()
-  }
-});
 
-export default router

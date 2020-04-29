@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-lg-6">Cards in Deck</div>
                                 <div class="col-lg-6">
-                                    <DeckList 
+                                    <DeckList ref="deckListRef"
                                               v-on:triggerChange="updateDeckCardList"
                                               v-on:addDeck="addNewDeck"
                                               v-bind:deckList="deckList"
@@ -60,6 +60,7 @@
     import ResultsTable from "./components/ResultsTable.vue";
     import DeckCardList from "./components/DeckCardList.vue";
     import DeckList from "./components/DeckList.vue";
+    require('./assets/css/Main.css')
 
     import "bootstrap";
     import "bootstrap/dist/css/bootstrap.min.css";
@@ -102,7 +103,7 @@
                         // Set selected dropdown value to new deck ID
                         this.selectedDeck = res.data;
                         // Set textbox val back to empty string
-                        // this.$refs.deckListRef.deckname = '';
+                        this.$refs.deckListRef.resetNewDeckName();
                     })
                     .catch(err => {
                         alert(`There was an error submitting your form. See details: ${err}`);

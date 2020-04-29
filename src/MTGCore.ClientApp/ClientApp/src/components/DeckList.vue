@@ -35,6 +35,9 @@
             },
             addNewDeck: function (title) {
                 this.$emit("addDeck", title);
+            },
+            resetNewDeckName: function () {
+                this.$refs.NewDeckRef.deckname = '';
             }
         },
         events: {

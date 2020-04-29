@@ -1,28 +1,27 @@
 ﻿<template>
-    <div class="modal" id="TitleModal" v-if="ShowModal" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add a new deck</h4>
-                    <button @click="close" type="button" id="btnCloseTitleModal" class="close pull-right">&times;</button>
-                </div>
-                <div class="modal-body">
-                    Title
-                    <input type="text" class="form-control" v-model="deckname" />
-                </div>
-                <div class="modal-footer">
-                    <button @click="adddeckclick" type="button" class="btn btn-primary">Add</button>
-                    <button @click="close" type="button" class="btn btn-primary">Close</button>
+    <transition name="modal" v-if="ShowModal">
+        <div class="modal" id="TitleModal" style="display: block; background-color: rgba(0, 0, 0, 0.5); transition: opacity 0.3s ease;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add a new deck</h4>
+                        <button @click="close" type="button" id="btnCloseTitleModal" class="close pull-right">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        Title
+                        <input type="text" class="form-control" v-model="deckname" />
+                    </div>
+                    <div class="modal-footer">
+                        <button @click="adddeckclick" type="button" class="btn btn-primary">Add</button>
+                        <button @click="close" type="button" class="btn btn-primary">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
-    import "bootstrap";
-    import "bootstrap/dist/css/bootstrap.min.css";
-    
     export default {
         data: function () {
             return {

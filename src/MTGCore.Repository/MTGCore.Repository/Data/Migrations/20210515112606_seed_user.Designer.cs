@@ -4,14 +4,16 @@ using MTGCore.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MTGCore.Data.Migrations
 {
     [DbContext(typeof(RepoContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210515112606_seed_user")]
+    partial class seed_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,14 +83,6 @@ namespace MTGCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Deck");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "Test Deck",
-                            UserID = new Guid("b4280b6a-0613-4cbd-a9e6-f1701e926e73")
-                        });
                 });
 
             modelBuilder.Entity("MTGCore.Dtos.Models.DeckCards", b =>
@@ -233,14 +227,14 @@ namespace MTGCore.Data.Migrations
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "404ca27f-19e7-48dc-99c7-76d8b63396d9",
+                            ConcurrencyStamp = "ca4c3c06-8b3b-4366-be7a-f130a9c59a58",
                             Email = "test@test.test",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@TEST.TEST",
                             NormalizedUserName = "TESTUSER",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6bc49ac0-b923-466a-9feb-67ebee73148a",
+                            SecurityStamp = "a58a642a-737c-4f36-9068-ba153ef1bd79",
                             TwoFactorEnabled = false,
                             UserName = "TestUser"
                         });

@@ -98,7 +98,7 @@ export default {
          this.updateDeckCardList(this.selectedDeck);
         })
         .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
+          alert(`There was an error adding card to deck. See details: ${err}`);
         });
     },
     SubmitForm() {
@@ -111,7 +111,7 @@ export default {
           this.post = res.data;
         })
         .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
+          alert(`There was an error searching for card. See details: ${err}`);
         });
     },
     updateDeckCardList(id) {
@@ -126,7 +126,7 @@ export default {
           this.deckCards = res.data;
         })
         .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
+          alert(`There was an error getting list of cards in deck. See details: ${err}`);
         });
     },
     updateDeckList() {
@@ -139,7 +139,7 @@ export default {
           this.deckList = res.data;
         })
         .catch(err => {
-          alert(`There was an error submitting your form. See details: ${err}`);
+          alert(`There was an error getting decklist. See details: ${err}`);
         });
     }
   },

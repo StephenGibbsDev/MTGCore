@@ -6,6 +6,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
@@ -29,11 +36,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MTGCore.Dtos\MTGCore.Dtos\MTGCore.Dtos.csproj" />
     <ProjectReference Include="..\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

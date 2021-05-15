@@ -5,6 +5,7 @@ using MTGCore.Dtos.Models;
 using System.IO;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace MTGCore.Repository
 {
@@ -31,10 +32,18 @@ namespace MTGCore.Repository
                 EmailConfirmed = true
             };
 
+            var deck = new Deck
+            {
+                Id=  1,
+                Title = "Test Deck",
+                UserID = new Guid(ADMIN_ID),
+            };
+
             PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
             passwordHasher.HashPassword(user, "Test.1234");
 
             builder.Entity<IdentityUser>().HasData(user);
+            builder.Entity<Deck>().HasData(deck);
         }
     }
 

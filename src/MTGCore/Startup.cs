@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using MTGCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MTGCore.Services;
 using AutoMapper;
+using MTGCore.Configuration;
+using MTGCore.Configuration.Interfaces;
 using MTGCore.Repository;
 using MTGCore.Services.Interfaces;
 
@@ -33,19 +28,17 @@ namespace MTGCore
         {
             services.AddHttpClient();
 
-            //services.AddDbContext<RepoContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<RepoContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            // Generic fileService handles any file operations required
-
-            IFileService fileService = new FileService();
+            services.AddSingleton<IAppConfiguration, AppConfiguration>();
+            services.AddSingleton<IManaSymbolImageMap, ManaSymbolImageMap>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IRepoContext, RepoContext>();
-            services.AddScoped<IConversionService>(s => new ManaConversionService(fileService, Environment.CurrentDirectory + @"\wwwroot\images\"));
+            services.AddScoped<IManaCostConverter, ManaCostConverter>();
+            services.AddScoped<IManaStringParser, ManaStringParser>();
+            services.AddScoped<IManaSymbolFactory, ManaSymbolFactory>();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();

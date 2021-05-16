@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
+using MTGCore.Services.Interfaces;
 using MTGCore.ViewModels;
 
 
@@ -19,17 +18,18 @@ namespace MTGCore.Controllers
 {
     public class DeckController : Controller
     {
-        private MTGService _mtgService;
+        private readonly MTGService _mtgService;
         private readonly IRepoContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private IMapper _mapper;
-
-
-        public DeckController(IRepoContext context, IMapper mapper, MTGService mtgservice, UserManager<IdentityUser> userManager)
+        private readonly IMapper _mapper;
+        private readonly IManaCostConverter _manaCostConverter;
+        
+        public DeckController(IRepoContext context, IMapper mapper, MTGService mtgservice, UserManager<IdentityUser> userManager, IManaCostConverter manaCostConverter)
         {
             _mtgService = mtgservice;
             _context = context;
             _userManager = userManager;
+            _manaCostConverter = manaCostConverter;
             _mapper = mapper;
 
         }
@@ -37,31 +37,22 @@ namespace MTGCore.Controllers
         [HttpGet]
         public IActionResult View()
         {
+            // TODO(CD): Duplication with API/DeckController
             var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == 1).ToList();
             var results = list.GroupBy(g => g.CardID).ToList();
+            var cardAmt = results.Select(m => new CardAmt { Card = AddManaSymbolsToCard(m.FirstOrDefault()?.Card), Amount = m.Count() });
 
-            List<CardAmt> cardAmt = new List<CardAmt>();
-
-            foreach (var group in results)
-            {
-                CardAmt ca1 = new CardAmt();
-                CardDto card = new CardDto();
-
-                var groupKey = group.Key;
-                ca1.Amount = group.Count();
-
-                card = group.FirstOrDefault().Card;
-
-                ca1.Card = card;
-                cardAmt.Add(ca1);
-            }
-
-            DeckViewModel deckViewModel = new DeckViewModel() { Cards = cardAmt };
-
-            return View(deckViewModel);
-
+            return View(new DeckViewModel { Cards = cardAmt });
         }
-
+        
+        private CardDtoWithSymbols AddManaSymbolsToCard(CardDto card)
+        {
+            // TODO(CD): If we move the card stuff into a store/repository, we can then do the mana cost conversion directly in there, saving us from having to do
+            // it everytime we want to retrieve the mana symbols.
+            var cardWithSymbols = _mapper.Map<CardDtoWithSymbols>(card);
+            cardWithSymbols.manaSymbols = _manaCostConverter.Convert(card.manaCost);
+            return cardWithSymbols;
+        }
 
         public IActionResult Index()
         {

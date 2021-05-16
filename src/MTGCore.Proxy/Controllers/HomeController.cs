@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MTGCore.Proxy.Models;
-using System.IO;
 
 namespace MTGCore.Proxy.Controllers
 {
@@ -45,14 +38,17 @@ namespace MTGCore.Proxy.Controllers
 
                 var mtgResponse = await httpClient.SendAsync(request);
 
-                if (mtgResponse.IsSuccessStatusCode)
+                if (!mtgResponse.IsSuccessStatusCode)
                 {
-                    var responseStream = await mtgResponse.Content.ReadAsStringAsync();
-                    //store card here as json
-                    System.IO.File.WriteAllText(fullPath, responseStream);
-
-                    return Content(responseStream);
+                    // TODO(CD): Use more specific exception
+                    throw new Exception("Call to MTG API failed");
                 }
+                
+                var responseStream = await mtgResponse.Content.ReadAsStringAsync();
+                //store card here as json
+                System.IO.File.WriteAllText(fullPath, responseStream);
+
+                return Content(responseStream);
             }
                 //reads from json file and return the string to 
                 string json = System.IO.File.ReadAllText(fullPath);

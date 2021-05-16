@@ -12,7 +12,7 @@
 
     export default {
       props: {
-        manaSymbols: []
+        manaSymbols: Array
       },
       methods: {
         loadImage(imageName) {

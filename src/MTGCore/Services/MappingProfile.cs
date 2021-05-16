@@ -15,9 +15,9 @@ namespace MTGCore.Services
         public MappingProfile()
         {
             //TODO: refactor this, this is gross. Card => CardDto would be ideal...
-            CreateMap<Card,CardDto>();
-            CreateMap<CardDto, Card>();
-
+            CreateMap<Card,CardDto>().ReverseMap();
+            CreateMap<CardDto, CardDtoWithSymbols>();
+            CreateMap<Card,CardDtoWithSymbols>();
             CreateMap<CardDto, CardViewModel>();
         }
 

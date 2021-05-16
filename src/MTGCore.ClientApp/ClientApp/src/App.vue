@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        <!-- <HelloWorld msg="this test is amazing"/> -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6">

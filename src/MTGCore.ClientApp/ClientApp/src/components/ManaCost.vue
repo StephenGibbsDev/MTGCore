@@ -1,7 +1,7 @@
 <template>
     <div>
-        <span v-for="(mana, index) in manaArray" v-bind:key="`${mana}[${index}]`">
-            <img :src="require(`../assets/images/${mana}.svg`)" width="20" height="20" />
+        <span v-for="symbol in manaSymbols" :key="symbol.image">
+            <img :src="loadImage(symbol.imageName)" width="20" height="20" alt="Mana Symbol" />
         </span>
     </div>
 </template>
@@ -9,14 +9,13 @@
 <script>
     import "bootstrap";
     import "bootstrap/dist/css/bootstrap.min.css";
-    
-    export default {
 
-        props: ['manaCost'],
-        computed: {
-            manaArray: function () {
-                return this.manaCost.split(/{(\w+)}/).filter(m => m);
-            }
+    export default {
+      props: ['manaSymbols'],
+      methods: {
+        loadImage(imageName) {
+          return require(`../assets/images/mana-symbols/${imageName}`);
         }
+      }
     };
 </script>

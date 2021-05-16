@@ -8,7 +8,11 @@ namespace MTGCore.Services
     {
         public IEnumerable<string> Parse(string manaCost)
         {
-            // TODO(CD): I'm wondering if it would be worth adding a check to ensure it is a valid string?
+            if (string.IsNullOrEmpty(manaCost))
+            {
+                throw new InvalidOperationException($"The mana cost string can not be parsed as it's in the incorrect format.");
+            }
+            
             return manaCost.Split(new[] { "{", "}" }, StringSplitOptions.RemoveEmptyEntries);
         }
     }

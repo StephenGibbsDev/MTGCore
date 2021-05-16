@@ -1,4 +1,5 @@
-﻿using MTGCore.Services.Interfaces;
+﻿using System;
+using MTGCore.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using MTGCore.Dtos.Models;
@@ -18,8 +19,27 @@ namespace MTGCore.Services
 
         public IEnumerable<ManaSymbol> Convert(string manaCost)
         {
-            var manaArr = _manaStringParser.Parse(manaCost);
+            if (!TryParse(manaCost, out var manaArr))
+            {
+                return Enumerable.Empty<ManaSymbol>();
+            }
+            
             return manaArr.Select(_manaSymbolFactory.Build);
+        }
+
+        private bool TryParse(string manaCost, out IEnumerable<string> parsedStringArray)
+        {
+            try
+            {
+                parsedStringArray = _manaStringParser.Parse(manaCost);
+                return true;
+            }
+            catch (InvalidOperationException ex)
+            {
+                // TODO(CD): Log ex here maybe
+                parsedStringArray = Enumerable.Empty<string>();
+                return false;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MTGCore.Services;
 using Shouldly;
 using Xunit;
@@ -16,6 +17,13 @@ namespace MTGCore.Tests
             var result = parser.Parse(manaCost);
             
             result.ShouldBe(output);
+        }
+        
+        [Fact]
+        public void Parse_ForInvalidString_ShouldThrow()
+        {
+            var parser = new ManaStringParser();
+            Assert.Throws<InvalidOperationException>(() => parser.Parse(null));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MTGCore.Services
                 return Enumerable.Empty<ManaSymbol>();
             }
             
-            return manaArr.Select(_manaSymbolFactory.Build);
+            return manaArr.Select(_manaSymbolFactory.Build).ToList();
         }
 
         private bool TryParse(string manaCost, out IEnumerable<string> parsedStringArray)

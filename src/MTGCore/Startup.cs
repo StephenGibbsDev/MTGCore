@@ -43,10 +43,6 @@ namespace MTGCore
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();
 
-            services.AddControllersWithViews()
-                .AddRazorRuntimeCompilation();
-
-            services.AddRazorPages();
             services.AddHttpClient<MTGService>();
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>

@@ -14,7 +14,7 @@
         <th scope="row">{{item.multiverseid}}</th>
         <td>{{item.name}}</td>
         <td>
-          <ManaCost :manaCost="item.manaCost" />
+          <ManaCost :manaSymbols="item.manaSymbols" />
         </td>
         <td>{{item.type}}</td>
         <td>

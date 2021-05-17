@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
+using MTGCore.Services.Interfaces;
 using MTGCore.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,14 +19,16 @@ namespace MTGCore.API
     public class DeckController : Controller
     {
         private readonly IRepoContext _context;
-        private MTGService _mtgService;
-        private IMapper _mapper;
+        private readonly MTGService _mtgService;
+        private readonly IMapper _mapper;
+        private readonly IManaCostConverter _manaCostConverter;
 
-        public DeckController(IRepoContext context, MTGService mtgservice, IMapper mapper)
+        public DeckController(IRepoContext context, MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter)
         {
             _context = context;
             _mtgService = mtgservice;
             _mapper = mapper;
+            _manaCostConverter = manaCostConverter;
         }
 
         //api/deck/
@@ -33,7 +36,7 @@ namespace MTGCore.API
         [HttpPost]
         public async Task Post(int deckID, string cardID)
         {
-
+            // TODO(CD): Requires refactoring
             var deckCard = new DeckCards();
 
             deckCard.CardID = cardID;
@@ -63,33 +66,24 @@ namespace MTGCore.API
             return _context.Deck.ToList();
         }
 
-        [Route("{Id}")]
+        [Route("{id}")]
         [HttpGet]
-        public async Task<DeckViewModel>Get(int Id)
+        public async Task<DeckViewModel> Get(int id)
         {
+            // TODO(CD): This should probably be moved into a store/repository
+            var list = await _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == id).ToListAsync();
+            var results = list.GroupBy(g => g.CardID);
+            var cardAmt = results.Select(m => new CardAmt { Card = AddManaSymbolsToCard(m.FirstOrDefault()?.Card), Amount = m.Count() });
+            return new DeckViewModel { Cards = cardAmt };
+        }
 
-            var list = _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == Id).ToList();
-            var results = list.GroupBy(g => g.CardID).ToList();
-
-            List<CardAmt> cardAmt = new List<CardAmt>();
-
-            foreach (var group in results)
-            {
-                CardAmt ca1 = new CardAmt();
-                CardDto card = new CardDto();
-
-                var groupKey = group.Key;
-                ca1.Amount = group.Count();
-
-                card = group.FirstOrDefault().Card;
-
-                ca1.Card = card;
-                cardAmt.Add(ca1);
-            }
-
-            DeckViewModel deckViewModel = new DeckViewModel() { Cards = cardAmt };
-
-            return deckViewModel;
+        private CardDtoWithSymbols AddManaSymbolsToCard(CardDto card)
+        {
+            // TODO(CD): If we move the card stuff into a store/repository, we can then do the mana cost conversion directly in there, saving us from having to do
+            // it everytime we want to retrieve the mana symbols.
+            var cardWithSymbols = _mapper.Map<CardDtoWithSymbols>(card);
+            cardWithSymbols.manaSymbols = _manaCostConverter.Convert(card.manaCost);
+            return cardWithSymbols;
         }
 
         [Route("New")]

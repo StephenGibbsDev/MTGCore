@@ -1,25 +1,25 @@
 ﻿import { shallowMount } from "@vue/test-utils";
 import ManaCost from "../../src/components/ManaCost.vue";
+import greenImage from "../../src/assets/images/mana-symbols/green.svg";
+import blueImage from "../../src/assets/images/mana-symbols/blue.svg";
 
 describe("ManaCost.vue", () => {
-    const manaCost = "{2}{W}";
+    const manaSymbols = [
+        { type: 'Green', imageName: 'green.svg' },
+        { type: 'Blue', imageName: 'blue.svg' }
+    ];
     const wrapper = shallowMount(ManaCost, {
-        propsData: { manaCost }
+        propsData: { manaSymbols }
     });
 
-    it("renders props.manaCost when passed", () => {
-        expect(wrapper.props("manaCost")).toMatch(manaCost);
-    });
-
-    it("renders computed.manaArray when passed", () => {
-        let array = ["2", "W"];
-        expect(wrapper.vm.manaArray).toEqual(array);
+    it("renders props.manaSymbols when passed", () => {
+        expect(wrapper.props("manaSymbols")).toEqual(manaSymbols);
     });
 
     it("renders the images correctly when passed", () => {
         const images = wrapper.findAll("img");
         expect(images.length).toBe(2);
-        expect(images.at(0).html()).toMatch('<img src=\"2.svg\" width="20" height="20">');
-        expect(images.at(1).html()).toMatch('<img src=\"W.svg\" width="20" height="20">');
+        expect(images.at(0).attributes('src')).toEqual(greenImage);
+        expect(images.at(1).attributes('src')).toEqual(blueImage);
     });
 });

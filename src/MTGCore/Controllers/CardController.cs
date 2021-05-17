@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
-using MTGCore.Models;
 using MTGCore.Repository;
 using MTGCore.Services;
 using MTGCore.Services.Interfaces;
 using MTGCore.ViewModels;
-using Newtonsoft.Json;
 
 namespace MTGCore.Controllers
 {
@@ -25,27 +19,27 @@ namespace MTGCore.Controllers
         private MTGService _mtgService;
         private IMapper _mapper;
         private readonly IRepoContext _context;
-        private readonly IConversionService _conversion;
+        private readonly IManaCostConverter _manaCostConverter;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IConversionService conversion, UserManager<IdentityUser> userManager)
+        public CardController(MTGService mtgservice, IMapper mapper, IRepoContext context, IManaCostConverter manaCostConverter, UserManager<IdentityUser> userManager)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
             _context = context;
-            _conversion = conversion;
+            _manaCostConverter = manaCostConverter;
             _userManager = userManager;
         }
 
         public async Task<ActionResult> Index(int Page)
         {
-
+            // TODO(CD): We should probably switch the mtgService into a repository (mtgClient)
+            // We could then inject it into a mtgService and do the mana conversion in there which will be much nicer
+            // It might be better for it to happen in the proxy
             var response = await _mtgService.GetCardsByPage(Page);
-
-
-            response.Select(x => { x.manaCost = _conversion.ConvertToSymbol(x.manaCost); return x; }).ToList();
-
             var cardList = _mapper.Map<List<CardDto>>(response);
+            // TODO(CD): Currently uncommented for a quick fix as these controllers are not even used by the Vue js frontend
+            // cardList.ForEach(m => m.manaSymbols = _manaCostConverter.Convert(m.manaCost));
 
             if (response == null)
                 return NotFound();
@@ -58,14 +52,15 @@ namespace MTGCore.Controllers
         {
             var response = await _mtgService.GetCardByMultiverseID(id);
 
-
-            response.manaCost = _conversion.ConvertToSymbol(response.manaCost);
-
             var model = _mapper.Map<CardDto>(response);
+            // TODO(CD): Currently uncommented for a quick fix as these controllers are not even used by the Vue js frontend
+            // model.manaSymbols = _manaCostConverter.Convert(model.manaCost);
 
-            var UserIDString = _userManager.GetUserId(HttpContext.User);
-
-            var userId = new Guid(UserIDString);
+            var userIDString = _userManager.GetUserId(HttpContext.User);
+            if (!Guid.TryParse(userIDString, out var userId))
+            {
+                userId = new Guid();
+            }
 
             var myDecks = _context.Deck.Where(x => x.UserID == userId).ToList();
 

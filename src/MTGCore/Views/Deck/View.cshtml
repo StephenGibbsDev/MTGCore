@@ -28,9 +28,7 @@
                     @Html.DisplayFor(modelItem => item.Card.name) x@(Html.DisplayFor(modelItem => item.Amount))
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Card.id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Card.id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Card.id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Card.id">Edit</a>
                 </td>
             </tr>
             i++;

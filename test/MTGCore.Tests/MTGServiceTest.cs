@@ -1,5 +1,4 @@
 using MTGCore.Services;
-using NSubstitute;
 using RichardSzalay.MockHttp;
 using Shouldly;
 using System.Threading.Tasks;

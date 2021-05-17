@@ -24,10 +24,13 @@ namespace MTGCore.ClientApp
 
             services.AddControllersWithViews();
 
+            // TODO(CD): All of the .NET stuff in this project should be removed I think
+            // Keep it as a pure frontend project
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "wwwroot";
             });
         }
 

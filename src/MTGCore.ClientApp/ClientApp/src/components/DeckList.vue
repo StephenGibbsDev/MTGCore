@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="form-group row" style="margin-bottom:0px">
+        <div class="form-group" style="margin-bottom:0px">
             <div class="input-group">
                 <div class="input-group-prepend float-right">
                     <button @click="openmodal" type="button" class="btn btn-default input-group-text">Add New Deck</button>

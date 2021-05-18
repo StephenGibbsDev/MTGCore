@@ -1,7 +1,7 @@
 <template>
   <div id="deck-container" class="fill-height">
     <div style="display: flex; height: 100%;">
-      <div style="border-right: 1px solid #dee2e6; flex-basis: 400px; overflow-x: hidden">
+      <div style="border-right: 1px solid #dee2e6; flex-basis: 600px; overflow-x: hidden">
         <form id="form" v-on:submit.prevent="">
           <div class="form-group search-container md">
             <div class="input-group">

@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-        <SearchFilterModal ref="SearchFilterRef"></SearchFilterModal>
+        <SearchFilterModal v-on:submitFilter="SetSearchFilter" ref="SearchFilterRef"></SearchFilterModal>
       </div>
     </div>
   </div>
@@ -89,6 +89,7 @@ export default {
       deckCards: null,
       deckList: null,
       selectedDeck: null,
+      searchFilter: null
     }
   },
   components: {
@@ -98,6 +99,9 @@ export default {
     SearchFilterModal,
   },
   methods: {
+    SetSearchFilter(value){
+      alert(JSON.stringify(value))
+    },
     openmodal: function () {
       this.$refs.SearchFilterRef.open()
     },

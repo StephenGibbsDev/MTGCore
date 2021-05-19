@@ -1,4 +1,47 @@
-﻿/* Vue Transitions */
+﻿html, body {
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--gray);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--gray);
+}
+
+#nav li.nav-item {
+    margin-right: 10px;
+}
+
+#nav .nav-item-right {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+#nav .nav-item-right:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+#nav a.router-link-exact-active {
+    color: var(--primary);
+}
+
+.fill-height {
+    flex-grow: 1;
+}
+
+/* Vue Transitions */
 .modal-enter {
   opacity: 0;
 }

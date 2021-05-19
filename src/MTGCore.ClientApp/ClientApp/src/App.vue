@@ -67,16 +67,15 @@
 </template>
 
 <script>
-import ResultsTable from './components/ResultsTable.vue'
-import DeckCardList from './components/DeckCardList.vue'
-import DeckList from './components/DeckList.vue'
-import SearchFilterModal from './components/SearchFilterModal.vue'
-import './assets/css/Main.css'
+import ResultsTable from './components/ResultsTable.vue';
+import DeckCardList from './components/DeckCardList.vue';
+import DeckList from './components/DeckList.vue';
+import SearchFilterModal from './components/SearchFilterModal.vue';
+import './assets/css/Main.css';
 
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import axios from 'axios'
-
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 export default {
   name: 'app',
@@ -89,8 +88,8 @@ export default {
       deckCards: null,
       deckList: null,
       selectedDeck: null,
-      searchFilter: null
-    }
+      searchFilter: null,
+    };
   },
   components: {
     ResultsTable,
@@ -99,15 +98,15 @@ export default {
     SearchFilterModal,
   },
   methods: {
-    SetSearchFilter(value){
-      alert(JSON.stringify(value))
+    SetSearchFilter(value) {
+      this.searchFilter = value;
     },
     openmodal: function () {
-      this.$refs.SearchFilterRef.open()
+      this.$refs.SearchFilterRef.open();
     },
     addNewDeck(title) {
-      var params = new URLSearchParams()
-      params.append('title', title)
+      var params = new URLSearchParams();
+      params.append('title', title);
 
       axios({
         method: 'post',
@@ -115,16 +114,16 @@ export default {
         data: params,
       })
         .then((res) => {
-          this.updateDeckCardList(res.data)
-          this.updateDeckList()
+          this.updateDeckCardList(res.data);
+          this.updateDeckList();
           // Set selected dropdown value to new deck ID
-          this.selectedDeck = res.data
+          this.selectedDeck = res.data;
           // Set textbox val back to empty string
-          this.$refs.deckListRef.resetNewDeckName()
+          this.$refs.deckListRef.resetNewDeckName();
         })
         .catch((err) => {
-          alert(`There was an error submitting your form. See details: ${err}`)
-        })
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     },
     addToDeck(id) {
       axios({
@@ -133,33 +132,40 @@ export default {
         data: this.$data,
       })
         .then(() => {
-          this.updateDeckCardList(this.selectedDeck)
+          this.updateDeckCardList(this.selectedDeck);
         })
         .catch((err) => {
-          alert(`There was an error submitting your form. See details: ${err}`)
-        })
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     },
     SubmitForm() {
-      this.searchInProgress = true
-      this.searchedCards = null
-      this.searchedCardsLoadingError = null
+      this.searchInProgress = true;
+      this.searchedCards = null;
+      this.searchedCardsLoadingError = null;
+
+      var filter = {}
+      filter["Name"]= this.Name;
+      filter["SearchFilter"] = this.searchFilter;
+
+      alert(JSON.stringify(filter));
+
       axios({
         method: 'post',
         url: 'https://localhost:44305/api/Search/',
         data: this.$data,
       })
         .then((res) => {
-          this.searchedCards = res.data
+          this.searchedCards = res.data;
         })
         .catch((err) => {
-          this.searchedCardsLoadingError = `Something went wrong: ${err}`
+          this.searchedCardsLoadingError = `Something went wrong: ${err}`;
         })
         .finally(() => {
-          this.searchInProgress = false
-        })
+          this.searchInProgress = false;
+        });
     },
     updateDeckCardList(id) {
-      this.selectedDeck = id
+      this.selectedDeck = id;
       axios({
         method: 'get',
         //todo: make this call based on the selected dropdown ID
@@ -167,11 +173,11 @@ export default {
         data: this.$data,
       })
         .then((res) => {
-          this.deckCards = res.data
+          this.deckCards = res.data;
         })
         .catch((err) => {
-          alert(`There was an error submitting your form. See details: ${err}`)
-        })
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     },
     updateDeckList() {
       axios({
@@ -180,16 +186,16 @@ export default {
         data: this.$data,
       })
         .then((res) => {
-          this.deckList = res.data
+          this.deckList = res.data;
         })
         .catch((err) => {
-          alert(`There was an error submitting your form. See details: ${err}`)
-        })
+          alert(`There was an error submitting your form. See details: ${err}`);
+        });
     },
   },
   mounted() {
-    this.updateDeckCardList(this.selectedDeck)
-    this.updateDeckList()
+    this.updateDeckCardList(this.selectedDeck);
+    this.updateDeckList();
   },
-}
+};
 </script>

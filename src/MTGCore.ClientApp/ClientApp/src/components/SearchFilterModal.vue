@@ -16,7 +16,7 @@
             <div class="row form-group">
               <div class="col-lg-2">Type:</div>
               <div class="col-lg-10">
-                <input v-model="form.type" type="text" class="form-control" />
+                <input v-model="form.Type" type="text" class="form-control" />
               </div>
             </div>
             <hr />
@@ -24,7 +24,7 @@
               <div class="col-lg-2">Colours:</div>
               <div class="col-lg-10">
                 <select
-                  v-model="form.coloursOption"
+                  v-model="form.ColoursOption"
                   class="form-control form-select form-select-lg"
                   aria-label="Are exactly"
                 >
@@ -35,27 +35,27 @@
 
             <div class="row form-group">
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="W" id="chkWhite" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="W" id="chkWhite" />
                 <label class="form-check-label" for="chkWhite">W</label>
               </div>
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="U" id="chkBlue" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="U" id="chkBlue" />
                 <label class="form-check-label" for="chkBlue">U</label>
               </div>
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="B" id="chkBlack" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="B" id="chkBlack" />
                 <label class="form-check-label" for="chkBlack">B</label>
               </div>
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="R" id="chkRed" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="R" id="chkRed" />
                 <label class="form-check-label" for="chkRed">R</label>
               </div>
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="G" id="chkGreen" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="G" id="chkGreen" />
                 <label class="form-check-label" for="chkGreen">G</label>
               </div>
               <div class="form-check form-inline col-md-2">
-                <input v-model="form.colours" class="form-check-input" type="checkbox" value="C" id="chkColourless" />
+                <input v-model="form.Colours" class="form-check-input" type="checkbox" value="C" id="chkColourless" />
                 <label class="form-check-label" for="chkColourless">C</label>
               </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="row form-group">
               <div class="col-lg-2">Rarity:</div>
               <div class="col-lg-10">
-                <select v-model="form.rarity" class="form-control form-select form-select-lg">
+                <select v-model="form.Rarity" class="form-control form-select form-select-lg">
                   <option selected value="Uncommon">Uncommon</option>
                   <option value="Uncommon">Common</option>
                   <option value="Uncommon">Mythic Rare</option>
@@ -77,14 +77,14 @@
             <div class="row form-group">
               <div class="col-lg-2">Set:</div>
               <div class="col-lg-10">
-                <input v-model="form.set" type="text" class="form-control" />
+                <input v-model="form.Set" type="text" class="form-control" />
               </div>
             </div>
 
             <div class="row form-group">
               <div class="col-lg-2">Price:</div>
               <div class="col-lg-10">
-                <input v-model="form.price" type="text" class="form-control" />
+                <input v-model="form.Price" type="text" class="form-control" />
               </div>
             </div>
           </div>
@@ -103,12 +103,12 @@ export default {
     return {
       ShowModal: false,
       form: {
-        type: '',
-        coloursOption: '',
-        colours: [],
-        rarity: '',
-        set: '',
-        price: '',
+        Type: '',
+        ColoursOption: '',
+        Colours: [],
+        Rarity: '',
+        Set: '',
+        Price: '',
       },
     };
   },
@@ -120,7 +120,8 @@ export default {
       this.ShowModal = false;
     },
     submitFilter: function () {
-      this.$emit('submitFilter', this.form)
+      this.$emit('submitFilter', this.form);
+      this.close();
     },
   },
 };

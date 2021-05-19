@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using MTGCore.ViewModels;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace MTGCore.Services
 {
@@ -53,6 +55,32 @@ namespace MTGCore.Services
         public async Task<List<Card>> GetCardByName(string name)
         {
             var result = await _client.GetAsync($"cards?name={name}");
+
+            if (!result.IsSuccessStatusCode)
+                return default;
+
+            var stream = await result.Content.ReadAsStringAsync();
+
+            var cardList = JsonConvert.DeserializeObject<RootObject>(stream).cards;
+
+            return cardList;
+        }
+
+        public async Task<List<Card>> GetCardByName(string name, SearchFilter filter)
+        {
+
+            //TODO: handle if filter is null
+            var queryParams = new Dictionary<string, string>()
+            {
+                {"name", name },
+                {nameof(filter.Type) , filter.Type},
+                {nameof(filter.Rarity), filter.Type },
+                {nameof(filter.Set), filter.Set },
+                {nameof(filter.Price), filter.Price }
+            };
+
+            var url = QueryHelpers.AddQueryString("cards", queryParams);
+            var result = await _client.GetAsync(url);
 
             if (!result.IsSuccessStatusCode)
                 return default;

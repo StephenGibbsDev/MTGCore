@@ -32,7 +32,7 @@ namespace MTGCore.API
             // TODO(CD): Lazy so re-using the CardDto. Since the CardDto is the model the db table is based off,
             // we should probably create a new specific DTO returning only the data we need on the frontend
             
-            var response = await _mtgService.GetCardByName(form.Name);
+            var response = await _mtgService.GetCardByName(form.Name, form.SearchFilter);
 
             var cardList = _mapper.Map<List<CardDtoWithSymbols>>(response);
             

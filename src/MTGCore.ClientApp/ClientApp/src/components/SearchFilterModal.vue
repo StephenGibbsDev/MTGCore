@@ -101,7 +101,7 @@
 export default {
   data: function () {
     return {
-      ShowModal: false,
+        ShowModal: false,
       form: {
         Type: '',
         ColoursOption: '',

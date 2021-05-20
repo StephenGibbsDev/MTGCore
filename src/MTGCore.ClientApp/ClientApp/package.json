@@ -9,7 +9,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@vue/cli-plugin-typescript": "^4.5.13",
     "@vue/cli-plugin-unit-jest": "^4.1.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "core-js": "^3.4.3",
@@ -42,11 +44,15 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended"
     ],
-    "rules": {},
+    "rules": {
+      "vue/no-unused-vars": "warning",
+      "no-console": "off"
+    },
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
     "overrides": [
       {

@@ -66,10 +66,11 @@
               <div class="col-lg-2">Rarity:</div>
               <div class="col-lg-10">
                 <select v-model="form.Rarity" class="form-control form-select form-select-lg">
-                  <option selected value="Uncommon">Uncommon</option>
-                  <option value="Uncommon">Common</option>
-                  <option value="Uncommon">Mythic Rare</option>
-                  <option value="Uncommon">Rare</option>
+                  <option disabled selected value> -- select an option -- </option>
+                  <option value="Uncommon">Uncommon</option>
+                  <option value="Common">Common</option>
+                  <option value="Mythic Rare">Mythic Rare</option>
+                  <option value="Rare">Rare</option>
                 </select>
               </div>
             </div>
@@ -121,6 +122,7 @@ export default {
     },
     submitFilter: function () {
       this.$emit('submitFilter', this.form);
+      alert(JSON.stringify(this.form))
       this.close();
     },
   },

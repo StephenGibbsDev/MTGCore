@@ -28,11 +28,11 @@ namespace MTGCore.Tests
             IEnumerable<KeyValuePair<string,string>> queryStringList = mapper.map(searchFilter);
 
 
-            var name = queryStringList.Where(x => x.Key == "Name").Single();
+            var name = queryStringList.Where(x => x.Key == "name").Single();
             name.Value.ShouldBe("Bomb");
 
 
-            var type = queryStringList.Where(x => x.Key == "Type").Single();
+            var type = queryStringList.Where(x => x.Key == "type").Single();
             type.Value.ShouldBe("Artifact");
 
         }

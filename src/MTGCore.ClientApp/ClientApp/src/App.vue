@@ -143,16 +143,17 @@ export default {
       this.searchedCards = null;
       this.searchedCardsLoadingError = null;
 
+
       var filter = {}
-      filter["Name"]= this.Name;
       filter["SearchFilter"] = this.searchFilter;
+      filter["SearchFilter"].Name = this.Name;
 
       alert(JSON.stringify(filter));
 
       axios({
         method: 'post',
         url: 'https://localhost:44305/api/Search/',
-        data: this.$data,
+        data: filter,
       })
         .then((res) => {
           this.searchedCards = res.data;

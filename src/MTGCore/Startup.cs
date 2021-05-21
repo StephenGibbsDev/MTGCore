@@ -39,6 +39,7 @@ namespace MTGCore
             services.AddScoped<IManaCostConverter, ManaCostConverter>();
             services.AddScoped<IManaStringParser, ManaStringParser>();
             services.AddScoped<IManaSymbolFactory, ManaSymbolFactory>();
+            services.AddScoped<ISearchFilterMapper, SearchFilterMapper>();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();

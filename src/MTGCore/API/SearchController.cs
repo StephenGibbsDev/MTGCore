@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
@@ -17,22 +19,25 @@ namespace MTGCore.API
         private MTGService _mtgService;
         private IMapper _mapper;
         private IManaCostConverter _manaCostConverter;
+        private ISearchFilterMapper _filterMapper;
 
-        public SearchController(MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter)
+        public SearchController(MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter, ISearchFilterMapper filterMapper)
         {
             _mtgService = mtgservice;
             _mapper = mapper;
             _manaCostConverter = manaCostConverter;
+            _filterMapper = filterMapper;
         }
 
         [EnableCors("MyPolicy")]
         [HttpPost]
-        public async Task<IEnumerable<CardDtoWithSymbols>> Post([FromBody] FormViewModel form)
+        public async Task<IEnumerable<CardDtoWithSymbols>> Post([FromBody] SearchCardViewModel form)
         {
             // TODO(CD): Lazy so re-using the CardDto. Since the CardDto is the model the db table is based off,
             // we should probably create a new specific DTO returning only the data we need on the frontend
             
-            var response = await _mtgService.GetCardByName(form.Name, form.SearchFilter);
+
+            var response = await _mtgService.GetCardBySearchFilter(_filterMapper.map(form.SearchFilter));
 
             var cardList = _mapper.Map<List<CardDtoWithSymbols>>(response);
             

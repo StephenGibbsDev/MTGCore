@@ -66,25 +66,10 @@ namespace MTGCore.Services
             return cardList;
         }
 
-        public async Task<List<Card>> GetCardByName(string name, SearchFilter filter)
+        public async Task<List<Card>> GetCardBySearchFilter(IEnumerable<KeyValuePair<string,string>> filters)
         {
 
-            var queryParams = new Dictionary<string, string>()
-            {
-                { nameof(name), name }
-            };
-
-            if (filter != null)
-            {
-                AddIfNotNull(queryParams, filter.Type, nameof(filter.Type));
-                //todo: find a way to elegantly handle List<string>. 
-                //AddIfNotNull(queryParams, filter.Colours);
-                AddIfNotNull(queryParams, filter.Rarity, nameof(filter.Rarity));
-                AddIfNotNull(queryParams, filter.Set, nameof(filter.Set));
-                AddIfNotNull(queryParams, filter.Price, nameof(filter.Price));
-            }
-
-            var url = QueryHelpers.AddQueryString("cards", queryParams);
+            var url = QueryHelpers.AddQueryString("cards", filters);
             var result = await _client.GetAsync(url);
 
             if (!result.IsSuccessStatusCode)
@@ -111,15 +96,5 @@ namespace MTGCore.Services
             return cardList;
         }
 
-        public Dictionary<string, string> AddIfNotNull(Dictionary<string, string> queryParams, string value, string key)
-        {
-            key = key.ToLower();
-            if (!String.IsNullOrEmpty(value))
-            {
-                queryParams.Add(key, value);
-            }
-
-            return queryParams;
-        }
     }
 }

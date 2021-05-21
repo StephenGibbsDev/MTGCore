@@ -19,6 +19,7 @@ namespace MTGCore.Services
             CreateMap<CardDto, CardDtoWithSymbols>();
             CreateMap<Card,CardDtoWithSymbols>();
             CreateMap<CardDto, CardViewModel>();
+            CreateMap<SearchCardViewModel, SearchFilter>();
         }
 
     }

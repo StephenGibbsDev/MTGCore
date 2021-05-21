@@ -104,6 +104,7 @@ export default {
     return {
         ShowModal: false,
       form: {
+        Name:'',
         Type: '',
         ColoursOption: '',
         Colours: [],

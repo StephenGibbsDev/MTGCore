@@ -39,7 +39,7 @@ const DeckService = {
         }
     },
 
-    async addCardToDeck(cardId: number, deckId: number) {
+    async addCardToDeck(cardId: number, deckId: string) {
         try {
             const response = await axios.post(`api/Deck/New/${deckId}/${cardId}`);
             return response.data;

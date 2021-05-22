@@ -12,20 +12,23 @@ namespace MTGCore.Tests
 {
     public class SearchFilterMapperTests
     {
+        private SearchFilterMapper mapper = new SearchFilterMapper();
+        private SearchFilterWithColours searchFilter = new SearchFilterWithColours()
+        {
+            Name = "Bomb",
+            Type = "Artifact",
+            Rarity = "Common",
+            Price = "100",
+            Set = "TEST",
+            Colours = new List<string>() {"B","C","U"}
+        };
+
+
         [Fact]
         public void returns_list_of_query_string_Parameters()
         {
-            var mapper = new SearchFilterMapper();
-            var searchFilter = new SearchFilter() 
-            { 
-                Name = "Bomb",
-                Type = "Artifact",
-                Rarity = "Common",
-                Price = "100",
-                Set = "TEST"
-            };
 
-            IEnumerable<KeyValuePair<string,string>> queryStringList = mapper.map(searchFilter);
+            Dictionary<string,string> queryStringList = mapper.map(searchFilter);
 
 
             var name = queryStringList.Where(x => x.Key == "name").Single();
@@ -34,7 +37,17 @@ namespace MTGCore.Tests
 
             var type = queryStringList.Where(x => x.Key == "type").Single();
             type.Value.ShouldBe("Artifact");
-
         }
+
+        [Fact]
+        public void returns_CSV()
+        {
+
+            var queryStringList = mapper.map(searchFilter);
+
+            var csv = queryStringList.Where(x => x.Key == "colours").Single();
+            csv.Value.ShouldBe("B,C,U");
+        }
+
     }
 }

@@ -16,4 +16,10 @@ namespace MTGCore.ViewModels
         public string ColoursOption { get; set; }
         public List<string> Colours { get; set; }
     }
+
+    public class SearchFilterOptions
+    {
+        public Dictionary<string, object> QueryStringPairs { get; set; }
+    }
+
 }

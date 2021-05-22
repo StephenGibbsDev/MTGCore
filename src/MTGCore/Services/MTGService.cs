@@ -66,7 +66,7 @@ namespace MTGCore.Services
             return cardList;
         }
 
-        public async Task<List<Card>> GetCardBySearchFilter(IEnumerable<KeyValuePair<string,string>> filters)
+        public async Task<List<Card>> GetCardBySearchFilter(Dictionary<string,string> filters)
         {
 
             var url = QueryHelpers.AddQueryString("cards", filters);

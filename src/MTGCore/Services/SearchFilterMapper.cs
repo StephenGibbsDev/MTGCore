@@ -1,5 +1,6 @@
 ﻿using MTGCore.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,24 +10,37 @@ namespace MTGCore.Services
 {
     public class SearchFilterMapper : ISearchFilterMapper
     {
+        private Dictionary<string, string> filterParameters = new Dictionary<string, string>();
 
-        public IEnumerable<KeyValuePair<string,string>> map(SearchFilter filter)
+        public Dictionary<string, string> map(SearchFilter filter)
         {
-            var filterParameters = new List<KeyValuePair<string, string>>();
 
-            PropertyInfo[] properties = typeof(SearchFilter).GetProperties();
+            PropertyInfo[] properties = typeof(SearchFilterWithColours).GetProperties();
             foreach (PropertyInfo property in properties)
             {
                 var name = property.Name;
-                var value = (string)property.GetValue(filter);
+                string value = null;
 
-                KeyValuePair<string,string> parameter = new KeyValuePair<string, string>(name.ToLower(),value);
-                if (!String.IsNullOrEmpty(value))
-                    filterParameters.Add(parameter);
+                //todo: find a better way to do this that is more extendable with any incoming type
+                if (property.PropertyType == typeof(string))
+                {
+                    value = (string)property.GetValue(filter);
+                }
 
+                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                {
+                    var list = (List<string>)property.GetValue(filter);
+                    value = String.Join(",", list.Select(x => x.ToString()).ToArray());
+                }
+
+                KeyValuePair<string, string> parameter = new KeyValuePair<string, string>(name.ToLower(), value);
+
+                if (!string.IsNullOrEmpty(parameter.Value))
+                    filterParameters.Add(parameter.Key, parameter.Value);
             }
 
             return filterParameters;
         }
     }
 }
+

@@ -5,6 +5,6 @@ namespace MTGCore.Services
 {
     public interface ISearchFilterMapper
     {
-        IEnumerable<KeyValuePair<string, string>> map(SearchFilter filter);
+        Dictionary<string, string> map(SearchFilter filter);
     }
 }

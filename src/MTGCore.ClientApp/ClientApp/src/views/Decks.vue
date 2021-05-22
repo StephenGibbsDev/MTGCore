@@ -26,9 +26,9 @@
           </form>
         </div>
         <div class="overflow-y-auto" style="height: 100%; position: relative;">
-          <Loader :visible="searchInProgress" :background="'Dark'" />
-          <ErrorMessage :visible="!!searchedCardsLoadingError" :message="searchedCardsLoadingError" />
-          <CardList v-on:addCardToDeck="addToDeck" v-bind:card="searchedCards"/>
+          <Loader :visible="SearchInProgress" :background="'Dark'" />
+          <ErrorMessage :visible="!!SearchedCardsLoadingError" :message="SearchedCardsLoadingError" />
+          <CardList v-on:addCardToDeck="addToDeck" v-bind:card="SearchedCards"/>
         </div>
       </div>
       <div style="flex-grow: 1;">
@@ -40,12 +40,12 @@
             <DeckList ref="deckListRef"
                       v-on:triggerChange="updateDeckCardList"
                       v-on:addDeck="addNewDeck"
-                      v-bind:deckList="deckList"
-                      v-bind:selectedOption="selectedDeck"/>
+                      v-bind:deckList="Decks"
+                      v-bind:selectedOption="SelectedDeck"/>
           </div>
         </div>
         <div class="card-body">
-          <DeckCardList v-bind:deckCards="deckCards"/>
+          <DeckCardList v-bind:deckCards="CardsInDeck"/>
         </div>
       </div>
     </div>
@@ -60,8 +60,19 @@ import Loader from "../components/base/Loader.vue";
 import ErrorMessage from "../components/base/ErrorMessage.vue";
 import DeckService from "../services/deck";
 import axios from 'axios';
+import Vue from "vue";
 
-export default {
+interface Data {
+  Name: string,
+  SearchedCards: any,
+  SearchedCardsLoadingError: string | null,
+  SearchInProgress: boolean,
+  CardsInDeck: any,
+  Decks: any,
+  SelectedDeck: number | null
+}
+
+export default Vue.extend({
   name: 'Decks',
   components: {
     CardList,
@@ -70,64 +81,69 @@ export default {
     Loader,
     ErrorMessage
   },
-  data: function () {
+  data(): Data {
     return {
-      Name: "",
-      searchedCards: null,
-      searchedCardsLoadingError: null,
-      searchInProgress: false,
-      deckCards: null,
-      deckList: null,
-      selectedDeck: null
+      Name: '',
+      SearchedCards: null,
+      SearchedCardsLoadingError: '',
+      SearchInProgress: false,
+      CardsInDeck: null,
+      Decks: null,
+      SelectedDeck: null
     };
   },
   methods: {
-    async addNewDeck(title) {
+    async addNewDeck(title: string) {
       const newDeckId = await DeckService.createDeck(title);
-      this.updateDeckCardList(newDeckId);
-      this.updateDeckList();
+      await this.updateDeckCardList(newDeckId);
+      await this.updateDeckList();
       // Set textbox val back to empty string
-      this.$refs.deckListRef.resetNewDeckName();
+      (this.$refs.deckListRef as any).resetNewDeckName();
     },
-    async addToDeck(cardId) {
-      await DeckService.addCardToDeck(this.selectedDeck, cardId);
-      this.updateDeckCardList(this.selectedDeck);
+    async addToDeck(cardId: string) {
+      if (!this.SelectedDeck) {
+        throw new Error("No deck is selected!");
+      }
+      
+      await DeckService.addCardToDeck(this.SelectedDeck, cardId);
+      await this.updateDeckCardList(this.SelectedDeck);
     },
     SubmitForm() {
-      this.searchInProgress = true;
-      this.searchedCards = null;
-      this.searchedCardsLoadingError = null;
+      this.SearchInProgress = true;
+      this.SearchedCards = null;
+      this.SearchedCardsLoadingError = null;
       axios({
         method: "post",
         url: "https://localhost:44305/api/Search/",
         data: this.$data
       })
           .then(res => {
-            this.searchedCards = res.data;
+            this.SearchedCards = res.data;
           })
           .catch(err => {
-            this.searchedCardsLoadingError = `Something went wrong: ${err}`;
+            this.SearchedCardsLoadingError = `Something went wrong: ${err}`;
           })
           .finally(() => {
-            this.searchInProgress = false;
+            this.SearchInProgress = false;
           });
     },
-    async updateDeckCardList(id) {
-      this.deckCards = await DeckService.getDeckById(id);
-      this.selectedDeck = id;
+    async updateDeckCardList(id: number) {
+      this.CardsInDeck = await DeckService.getDeckById(id);
+      this.SelectedDeck = id;
     },
     async updateDeckList() {
-      this.deckList = await DeckService.getDecks();
+      this.Decks = await DeckService.getDecks();
     }
   },
   mounted() {
     this.updateDeckList();
-    if (this.deckList && this.deckList.length > 0) {
-      alert('Hit');
-      this.updateDeckCardList(this.selectedDeck);
+    if (this.Decks && this.Decks.length > 0) {
+      // TODO(CD): Can probably set their selected deck to the most recently viewed one?
+      // Storing it in the local memory may be simplest or in the DB
+      // this.updateDeckCardList(this.SelectedDeck);
     }
   }
-}
+})
 </script>
 
 <style scoped>

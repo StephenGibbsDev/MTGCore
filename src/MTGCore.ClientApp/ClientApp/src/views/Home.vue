@@ -5,9 +5,13 @@
 </template>
 
 <script>
-import '../assets/css/Home.css';
-
 export default {
   name: 'Home'
 }
 </script>
+
+<style scoped>
+#home-container {
+  background-color: goldenrod;
+}
+</style>

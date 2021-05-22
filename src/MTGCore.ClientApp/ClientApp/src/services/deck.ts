@@ -4,11 +4,11 @@ const DeckService = {
     init(baseUrl: string) {
         axios.defaults.baseURL = baseUrl;
     },
-
+    
+    // TODO(CD): Should work out if we actually want to catch in these methods
     async getDeckById(id: number) {
         try {
             const response = await axios.get(`api/Deck/${id}`);
-            console.log(response);
             return response.data;
         }
         catch (err) {

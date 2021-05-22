@@ -29,13 +29,14 @@
 * {
   --primary: #42b983;
   --gray: #2c3e50;
+  --light-grey: #f8f9fa;
 }
 </style>
 
 <script>
-import './assets/css/Main.css';
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './assets/css/Main.css';
 
 export default {
   name: "app"

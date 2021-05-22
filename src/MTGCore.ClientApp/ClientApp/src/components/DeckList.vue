@@ -1,18 +1,15 @@
 <template>
-    <div>
-        <div class="form-group" style="margin-bottom:0px">
+        <div class="form-group" style="margin-bottom: 0">
             <div class="input-group">
-                <div class="input-group-prepend float-right">
-                    <button @click="openmodal" type="button" class="btn btn-default input-group-text">Add New Deck</button>
+                <div class="input-group-prepend">
+                    <button @click="openmodal" type="button" class="btn btn-default input-group-text">New Deck</button>
                 </div>
-                <select class="form-control float-right col-lg-9" @change="onchange" v-model="selectedOption">
+                <select class="form-control" @change="onchange" v-model="selectedOption">
                     <option v-for="item in deckList" v-bind:Key="item.id" v-bind:value="item.id">{{item.title}}</option>
                 </select>
             </div>
+          <DeckNewModal ref="NewDeckRef" v-on:addDeckClick="addNewDeck"></DeckNewModal>
         </div>
-        
-        <DeckNewModal ref="NewDeckRef" v-on:addDeckClick="addNewDeck"></DeckNewModal>
-    </div>
 </template> 
 
 <script>

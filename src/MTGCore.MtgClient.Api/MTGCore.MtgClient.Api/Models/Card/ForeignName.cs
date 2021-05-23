@@ -1,4 +1,4 @@
-﻿namespace MTGCore.Models
+﻿namespace MTGCore.MtgClient.Api.Models.Card
 {
     public class ForeignName
     {

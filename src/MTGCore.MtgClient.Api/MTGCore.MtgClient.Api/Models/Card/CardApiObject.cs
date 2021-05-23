@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-
-namespace MTGCore.Models
+namespace MTGCore.MtgClient.Api.Models.Card
 {
-    public class Card
+    public class CardApiObject
     {
         public string name { get; set; }
         public string manaCost { get; set; } 

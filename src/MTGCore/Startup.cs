@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using MTGCore.Services;
 using AutoMapper;
 using MTGCore.Configuration;
 using MTGCore.Configuration.Interfaces;
+using MTGCore.MtgClient.Api.Services;
 using MTGCore.Repository;
 using MTGCore.Services.Interfaces;
 
@@ -26,7 +28,9 @@ namespace MTGCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient();
+            // TODO(CD): Turn into an env var
+            const string baseUrl = "https://localhost:44317/v1/";
+            services.AddHttpClient<MtgHttpClient>("MTG", client => client.BaseAddress = new Uri(baseUrl));
 
             services.AddDbContext<RepoContext>(options =>
                 options.UseSqlServer(
@@ -42,8 +46,6 @@ namespace MTGCore
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();
-
-            services.AddHttpClient<MTGService>();
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {

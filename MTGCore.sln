@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGCore.ClientApp", "src\MT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGCore.Configuration", "src\MTGCore.Configuration\MTGCore.Configuration.csproj", "{A7240588-3610-4AEA-8936-7CE63B132A53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGCore.MtgClient.Api", "src\MTGCore.MtgClient.Api\MTGCore.MtgClient.Api\MTGCore.MtgClient.Api.csproj", "{48CD36E3-1DC9-4693-B6C9-EDDF70197794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A7240588-3610-4AEA-8936-7CE63B132A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7240588-3610-4AEA-8936-7CE63B132A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7240588-3610-4AEA-8936-7CE63B132A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48CD36E3-1DC9-4693-B6C9-EDDF70197794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48CD36E3-1DC9-4693-B6C9-EDDF70197794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48CD36E3-1DC9-4693-B6C9-EDDF70197794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48CD36E3-1DC9-4693-B6C9-EDDF70197794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

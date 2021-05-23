@@ -1,11 +1,6 @@
-﻿
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MTGCore.Models;
+﻿using AutoMapper;
 using MTGCore.Dtos.Models;
+using MTGCore.MtgClient.Api.Models.Card;
 using MTGCore.ViewModels;
 
 namespace MTGCore.Services
@@ -15,9 +10,9 @@ namespace MTGCore.Services
         public MappingProfile()
         {
             //TODO: refactor this, this is gross. Card => CardDto would be ideal...
-            CreateMap<Card,CardDto>().ReverseMap();
+            CreateMap<CardApiObject, CardDto>().ReverseMap();
             CreateMap<CardDto, CardDtoWithSymbols>();
-            CreateMap<Card,CardDtoWithSymbols>();
+            CreateMap<CardApiObject, CardDtoWithSymbols>();
             CreateMap<CardDto, CardViewModel>();
         }
 

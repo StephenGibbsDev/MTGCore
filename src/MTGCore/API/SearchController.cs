@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGCore.Dtos.Models;
+using MTGCore.MtgClient.Api.Services;
 using MTGCore.Services;
 using MTGCore.Services.Exceptions;
 using MTGCore.Services.Interfaces;
@@ -16,13 +17,13 @@ namespace MTGCore.API
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly MTGService _mtgService;
+        private readonly MtgHttpClient _mtgService;
         private readonly IMapper _mapper;
         private readonly IManaCostConverter _manaCostConverter;
         // TODO(CD): It could be worth implementing the ILogger interface for a custom logger to give us control over what it does
         private readonly ILogger<SearchController> _logger;
 
-        public SearchController(MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter, ILogger<SearchController> logger)
+        public SearchController(MtgHttpClient mtgservice, IMapper mapper, IManaCostConverter manaCostConverter, ILogger<SearchController> logger)
         {
             _mtgService = mtgservice;
             _mapper = mapper;

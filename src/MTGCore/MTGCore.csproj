@@ -39,12 +39,13 @@
   <ItemGroup>
     <ProjectReference Include="..\MTGCore.Configuration\MTGCore.Configuration.csproj" />
     <ProjectReference Include="..\MTGCore.Dtos\MTGCore.Dtos\MTGCore.Dtos.csproj" />
+    <ProjectReference Include="..\MTGCore.MtgClient.Api\MTGCore.MtgClient.Api\MTGCore.MtgClient.Api.csproj" />
     <ProjectReference Include="..\MTGCore.Repository\MTGCore.Repository\MTGCore.Repository.csproj" />
   </ItemGroup>
   
 
   <ItemGroup>
-    <Folder Include="Models\Enums" />
+    <Folder Include="Models" />
     <Folder Include="wwwroot\images" />
   </ItemGroup>
 

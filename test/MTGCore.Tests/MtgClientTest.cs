@@ -1,12 +1,13 @@
-using MTGCore.Services;
+using System.Linq;
 using RichardSzalay.MockHttp;
 using Shouldly;
 using System.Threading.Tasks;
+using MTGCore.MtgClient.Api.Services;
 using Xunit;
 
 namespace MTGCore.Tests
 {
-    public class MTGServiceTest
+    public class MtgClientTest
     {
 
         [Fact]
@@ -20,8 +21,8 @@ namespace MTGCore.Tests
 
             var client = mockHttp.ToHttpClient();
 
-            var mtgservice = new MTGService(client);
-            var user = await mtgservice.GetCardByMultiverseID(74208);
+            var mtgservice = new MtgHttpClient(client);
+            var user = await mtgservice.GetCardByMultiverseId(74208);
 
             user.name.ShouldBe("TestyCard");
         }
@@ -37,10 +38,10 @@ namespace MTGCore.Tests
 
             var client = mockHttp.ToHttpClient();
 
-            var mtgservice = new MTGService(client);
+            var mtgservice = new MtgHttpClient(client);
             var user = await mtgservice.GetCardsByPage(1);
 
-            user.Count.ShouldBe(2);
+            user.Count().ShouldBe(2);
         }
     }
 }

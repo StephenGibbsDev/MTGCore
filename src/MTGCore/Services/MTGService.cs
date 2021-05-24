@@ -66,6 +66,7 @@ namespace MTGCore.Services
             return cardList;
         }
 
+        //todo: pass in string instead of dictionary
         public async Task<List<Card>> GetCardBySearchFilter(Dictionary<string,string> filters)
         {
 

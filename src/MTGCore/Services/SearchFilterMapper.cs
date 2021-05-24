@@ -1,4 +1,5 @@
-﻿using MTGCore.ViewModels;
+﻿using MTGCore.Services.Exceptions;
+using MTGCore.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,29 +19,40 @@ namespace MTGCore.Services
             PropertyInfo[] properties = typeof(SearchFilterWithColours).GetProperties();
             foreach (PropertyInfo property in properties)
             {
-                var name = property.Name;
-                string value = null;
+                Type type = property.PropertyType;
 
-                //todo: find a better way to do this that is more extendable with any incoming type
-                if (property.PropertyType == typeof(string))
-                {
-                    value = (string)property.GetValue(filter);
-                }
+                var methodInfo = typeof(SearchFilterMapper).GetMethod(nameof(SearchFilterMapper.ValueToString));
+                var genericMethodInfo = methodInfo.MakeGenericMethod(type);
+                var result = genericMethodInfo.Invoke(null, new object[] { property, filter });
 
-                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-                {
-                    var list = (List<string>)property.GetValue(filter);
-                    value = String.Join(",", list.Select(x => x.ToString()).ToArray());
-                }
+                var pair = new KeyValuePair<string, string>(property.Name.ToLower(), (string)result);
 
-                KeyValuePair<string, string> parameter = new KeyValuePair<string, string>(name.ToLower(), value);
-
-                if (!string.IsNullOrEmpty(parameter.Value))
-                    filterParameters.Add(parameter.Key, parameter.Value);
+                if (!string.IsNullOrEmpty(pair.Value))
+                    filterParameters.Add(pair.Key, pair.Value);
             }
 
             return filterParameters;
         }
+
+        public static string ValueToString<T>(PropertyInfo property, SearchFilter filter)
+        {
+            var type = typeof(T);
+
+            if (type == typeof(string))
+            {
+                return (string)property.GetValue(filter);
+            }
+            else if (typeof(IEnumerable).IsAssignableFrom(type) && type != typeof(string))
+            {
+                var list = (List<string>)property.GetValue(filter);
+                return String.Join(",", list.Select(x => x.ToString()).ToArray());
+            } else
+            {
+                throw new SearchFilterMapperException($"the type of {type.Name} is not supported in {nameof(SearchFilterMapper)}");
+            }
+
+        }
+
     }
 }
 

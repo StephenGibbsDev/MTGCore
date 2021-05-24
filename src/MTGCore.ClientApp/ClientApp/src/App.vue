@@ -148,8 +148,6 @@ export default {
       filter["SearchFilter"] = this.searchFilter;
       filter["SearchFilter"].Name = this.Name;
 
-      alert(JSON.stringify(filter));
-
       axios({
         method: 'post',
         url: 'https://localhost:44305/api/Search/',

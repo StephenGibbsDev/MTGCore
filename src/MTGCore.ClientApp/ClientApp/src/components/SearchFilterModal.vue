@@ -123,7 +123,6 @@ export default {
     },
     submitFilter: function () {
       this.$emit('submitFilter', this.form);
-      alert(JSON.stringify(this.form))
       this.close();
     },
   },

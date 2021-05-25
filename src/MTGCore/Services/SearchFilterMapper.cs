@@ -13,6 +13,12 @@ namespace MTGCore.Services
     {
         private Dictionary<string, string> filterParameters = new Dictionary<string, string>();
 
+        private Dictionary<Type, Delegate> typeProcessorMap = new Dictionary<Type, Delegate>() 
+        {
+            { typeof(List<string>), new Func<PropertyInfo,SearchFilter,string>((x,y) => {return StringListResolver.ValueToString(x,y);}) },
+            { typeof(string), new Func<PropertyInfo,SearchFilter,string>((x,y) => {return StringResolver.ValueToString(x,y);}) }
+        };
+
         public Dictionary<string, string> map(SearchFilter filter)
         {
 
@@ -21,9 +27,7 @@ namespace MTGCore.Services
             {
                 Type type = property.PropertyType;
 
-                var methodInfo = typeof(SearchFilterMapper).GetMethod(nameof(SearchFilterMapper.ValueToString));
-                var genericMethodInfo = methodInfo.MakeGenericMethod(type);
-                var result = genericMethodInfo.Invoke(null, new object[] { property, filter });
+                var result = typeProcessorMap[type].DynamicInvoke(property, filter);
 
                 var pair = new KeyValuePair<string, string>(property.Name.ToLower(), (string)result);
 
@@ -33,26 +37,24 @@ namespace MTGCore.Services
 
             return filterParameters;
         }
+    }
 
-        public static string ValueToString<T>(PropertyInfo property, SearchFilter filter)
+
+    public class StringResolver 
+    {
+        public static string ValueToString(PropertyInfo property, SearchFilter filter)
         {
-            var type = typeof(T);
-
-            if (type == typeof(string))
-            {
-                return (string)property.GetValue(filter);
-            }
-            else if (typeof(IEnumerable).IsAssignableFrom(type) && type != typeof(string))
-            {
-                var list = (List<string>)property.GetValue(filter);
-                return String.Join(",", list.Select(x => x.ToString()).ToArray());
-            } else
-            {
-                throw new SearchFilterMapperException($"the type of {type.Name} is not supported in {nameof(SearchFilterMapper)}");
-            }
-
+            return (string)property.GetValue(filter);
         }
+    }
 
+    public class StringListResolver 
+    {
+        public static string ValueToString(PropertyInfo property, SearchFilter filter)
+        {
+            var list = (List<string>)property.GetValue(filter);
+            return String.Join(",", list.Select(x => x.ToString()).ToArray());
+        }
     }
 }
 

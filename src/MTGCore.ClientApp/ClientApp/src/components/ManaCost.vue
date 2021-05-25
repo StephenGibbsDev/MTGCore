@@ -1,7 +1,7 @@
 <template>
     <div>
         <span v-for="(symbol, index) in manaSymbols" :key="index">
-            <img :src="loadImage(symbol.imageName)" width="20" height="20" alt="Mana Symbol" />
+            <img :src="loadImage(symbol.imageName)" v-bind:width="size" v-bind:height="size" alt="Mana Symbol" />
         </span>
     </div>
 </template>
@@ -12,7 +12,12 @@
 
     export default {
       props: {
-        manaSymbols: Array
+        manaSymbols: Array,
+        size: {
+          type: Number,
+          required: false,
+          default: 20
+        }
       },
       methods: {
         loadImage(imageName) {

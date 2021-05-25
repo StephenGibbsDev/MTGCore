@@ -1,7 +1,7 @@
 ﻿import { shallowMount } from "@vue/test-utils";
 import ManaCost from "../../src/components/ManaCost.vue";
-import greenImage from "../../src/assets/images/mana-symbols/green.svg";
-import blueImage from "../../src/assets/images/mana-symbols/blue.svg";
+const greenImage = require("../../src/assets/images/mana-symbols/green.svg");
+const blueImage = require("../../src/assets/images/mana-symbols/blue.svg");
 
 describe("ManaCost.vue", () => {
     const manaSymbols = [

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MTGCore.MtgClient.Api.Exceptions;
 using MTGCore.MtgClient.Api.Models.Card;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MTGCore.MtgClient.Api.Services
 {
@@ -52,9 +53,14 @@ namespace MTGCore.MtgClient.Api.Services
             {
                 using var result = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
                 result.EnsureSuccessStatusCode();
+                
+                var options = new JsonSerializerOptions
+                {
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
+                };
 
                 await using var stream = await result.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<T>(stream);
+                return await JsonSerializer.DeserializeAsync<T>(stream, options);
             }
             catch (Exception ex)
             {

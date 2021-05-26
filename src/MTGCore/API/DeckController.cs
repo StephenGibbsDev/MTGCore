@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MTGCore.Dtos.Models;
+using MTGCore.MtgClient.Api.Services;
 using MTGCore.Repository;
 using MTGCore.Services;
 using MTGCore.Services.Interfaces;
@@ -19,14 +20,14 @@ namespace MTGCore.API
     public class DeckController : Controller
     {
         private readonly IRepoContext _context;
-        private readonly MTGService _mtgService;
+        private readonly IMtgHttpClient _mtgHttpClient;
         private readonly IMapper _mapper;
         private readonly IManaCostConverter _manaCostConverter;
 
-        public DeckController(IRepoContext context, MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter)
+        public DeckController(IRepoContext context, IMtgHttpClient mtgHttpClient, IMapper mapper, IManaCostConverter manaCostConverter)
         {
             _context = context;
-            _mtgService = mtgservice;
+            _mtgHttpClient = mtgHttpClient;
             _mapper = mapper;
             _manaCostConverter = manaCostConverter;
         }
@@ -47,7 +48,7 @@ namespace MTGCore.API
             var dbCard = _context.Card.Where(x => x.id == cardID).SingleOrDefault();
             if (dbCard == null)
             {
-                var card = await _mtgService.GetCardByID(cardID);
+                var card = await _mtgHttpClient.GetCardById(cardID);
                 var model = _mapper.Map<CardDto>(card);
 
                 _context.Card.Add(model);

@@ -143,10 +143,23 @@ export default {
       this.searchedCards = null;
       this.searchedCardsLoadingError = null;
 
-
+      alert(this.Name);
       var filter = {}
-      filter["SearchFilter"] = this.searchFilter;
-      filter["SearchFilter"].Name = this.Name;
+      var SearchFilter = 
+      {
+        Name:''
+      }
+      
+      if(this.searchFilter)
+      {
+        SearchFilter =  this.searchFilter 
+      }
+
+      SearchFilter.Name = this.Name;
+      filter["SearchFilter"] = SearchFilter;
+        
+      alert(JSON.stringify(filter));
+
 
       axios({
         method: 'post',

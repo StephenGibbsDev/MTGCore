@@ -19,7 +19,7 @@ namespace MTGCore.Tests
             Type = "Artifact",
             Rarity = "Common",
             Price = "100",
-            Set = "TEST",
+            Set = null,
             Colours = new List<string>() {"B","C","U"}
         };
 

@@ -22,7 +22,8 @@ namespace MTGCore.Services
         public Dictionary<string, string> map(SearchFilter filter)
         {
 
-            PropertyInfo[] properties = typeof(SearchFilterWithColours).GetProperties();
+            var properties = typeof(SearchFilterWithColours).GetProperties().Where(val => val.GetValue(filter,null) != null).ToList();
+
             foreach (PropertyInfo property in properties)
             {
                 Type type = property.PropertyType;

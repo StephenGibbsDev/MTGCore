@@ -6,16 +6,19 @@ using MTGCore.MtgClient.Api.Exceptions;
 using MTGCore.MtgClient.Api.Models.Card;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace MTGCore.MtgClient.Api.Services
 {
     public class MtgHttpClient
     {
         private readonly HttpClient _client;
+        private readonly ILogger<MtgHttpClient> _logger;
 
-        public MtgHttpClient(HttpClient client)
+        public MtgHttpClient(HttpClient client, ILogger<MtgHttpClient> logger)
         {
             _client = client;
+            _logger = logger;
         }
 
         public async Task<CardApiObject> GetCardByMultiverseId(int multiverseId)
@@ -49,6 +52,8 @@ namespace MTGCore.MtgClient.Api.Services
 
         private async Task<T> PerformRequest<T>(HttpRequestMessage request)
         {
+            _logger.LogInformation("Making a HTTP request: {request}", request);
+            
             try
             {
                 using var result = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
@@ -64,6 +69,7 @@ namespace MTGCore.MtgClient.Api.Services
             }
             catch (Exception ex)
             {
+                _logger.LogWarning(ex, "An occurred while making a HTTP request");
                 throw new MtgClientException($"An error occurred while making a request to '{request}'", ex);
             }
             

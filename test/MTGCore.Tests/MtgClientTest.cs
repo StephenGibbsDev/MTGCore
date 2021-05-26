@@ -2,6 +2,8 @@ using System.Linq;
 using RichardSzalay.MockHttp;
 using Shouldly;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Moq;
 using MTGCore.MtgClient.Api.Services;
 using Xunit;
 
@@ -21,7 +23,7 @@ namespace MTGCore.Tests
 
             var client = mockHttp.ToHttpClient();
 
-            var mtgservice = new MtgHttpClient(client);
+            var mtgservice = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
             var user = await mtgservice.GetCardByMultiverseId(74208);
 
             user.name.ShouldBe("TestyCard");
@@ -38,7 +40,7 @@ namespace MTGCore.Tests
 
             var client = mockHttp.ToHttpClient();
 
-            var mtgservice = new MtgHttpClient(client);
+            var mtgservice = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
             var user = await mtgservice.GetCardsByPage(1);
 
             user.Count().ShouldBe(2);

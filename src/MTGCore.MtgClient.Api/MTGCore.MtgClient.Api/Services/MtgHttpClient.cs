@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MTGCore.MtgClient.Api.Services
 {
-    public class MtgHttpClient
+    public class MtgHttpClient : IMtgHttpClient
     {
         private readonly HttpClient _client;
         private readonly ILogger<MtgHttpClient> _logger;

@@ -1,6 +1,4 @@
-using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MTGCore.Services;
 using AutoMapper;
+using MTGCore.Authentication.Identity;
 using MTGCore.Configuration;
 using MTGCore.Configuration.Interfaces;
-using MTGCore.MtgClient.Api.Services;
+using MTGCore.MtgClient.Api;
 using MTGCore.Repository;
+using MTGCore.Services.Decks;
 using MTGCore.Services.Interfaces;
 
 namespace MTGCore
@@ -28,10 +28,6 @@ namespace MTGCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO(CD): Turn into an env var
-            const string baseUrl = "https://localhost:44317/v1/";
-            services.AddHttpClient<MtgHttpClient>("MTG", client => client.BaseAddress = new Uri(baseUrl));
-
             services.AddDbContext<RepoContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -43,25 +39,22 @@ namespace MTGCore
             services.AddScoped<IManaCostConverter, ManaCostConverter>();
             services.AddScoped<IManaStringParser, ManaStringParser>();
             services.AddScoped<IManaSymbolFactory, ManaSymbolFactory>();
+            services.AddScoped<IDeckService, DeckService>();
+            services.RegisterRepository();
+            services.RegisterMtgClient();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RepoContext>();
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
-
+            services.AddCors();
+            
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
 
-            IMapper mapper = mappingConfig.CreateMapper();
+            var mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
         }
@@ -80,23 +73,22 @@ namespace MTGCore
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
-
             app.UseRouting();
-            app.UseCors("MyPolicy");
+            // TODO(CD): Env var this shit
+            app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader());
+
+            // app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
         }
     }

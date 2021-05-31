@@ -28,7 +28,7 @@ namespace MTGCore.MtgClient.Api.Services
             return result.card;
         }
 
-        public async Task<CardApiObject> GetCardById(string id)
+        public async Task<CardApiObject> GetCardById(Guid id)
         {
             var message = new HttpRequestMessage(HttpMethod.Get, $"cards/{id}");
             var result = await PerformRequest<CardApiResponse>(message);

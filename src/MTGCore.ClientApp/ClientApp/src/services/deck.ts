@@ -6,7 +6,7 @@ const DeckService = {
     },
     
     // TODO(CD): Should work out if we actually want to catch in these methods
-    async getDeckById(id: number) {
+    async getDeckById(id: string) {
         try {
             const response = await axios.get(`api/Deck/${id}`);
             return response.data;
@@ -28,9 +28,9 @@ const DeckService = {
         }
     },
 
-    async createDeck(title: string) {
+    async createDeck(title: string, description: string) {
         try {
-            const response = await axios.post('api/Deck/New', { title: title });
+            const response = await axios.post('api/Deck/New', { Title: title, Description: description });
             return response.data;
         }
         catch (err) {
@@ -39,10 +39,19 @@ const DeckService = {
         }
     },
 
-    async addCardToDeck(cardId: number, deckId: string) {
+    async addCardToDeck(deckId: string, cardId: string) {
         try {
-            const response = await axios.post(`api/Deck/New/${deckId}/${cardId}`);
-            return response.data;
+            await axios.post(`api/Deck/${deckId}/add/${cardId}`);
+        }
+        catch (err) {
+            // Log here
+            throw new Error(err);
+        }
+    },
+
+    async removeCardFromDeck(deckId: string, cardId: string) {
+        try {
+            await axios.post(`api/Deck/${deckId}/remove/${cardId}`);
         }
         catch (err) {
             // Log here

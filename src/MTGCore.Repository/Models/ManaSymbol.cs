@@ -1,6 +1,6 @@
-﻿using MTGCore.Dtos.Enums;
+﻿using MTGCore.Repository.Enums;
 
-namespace MTGCore.Dtos.Models
+namespace MTGCore.Repository.Models
 {
     public class ManaSymbol
     {

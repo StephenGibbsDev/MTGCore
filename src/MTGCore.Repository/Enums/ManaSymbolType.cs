@@ -1,4 +1,4 @@
-﻿namespace MTGCore.Dtos.Enums
+﻿namespace MTGCore.Repository.Enums
 {
     public enum ManaSymbolType
     {

@@ -1,49 +1,54 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using MTGCore.Dtos.Models;
 using System.IO;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;
+using MTGCore.Authentication.Identity;
+using MTGCore.Repository.Models;
 
 namespace MTGCore.Repository
 {
-    public class RepoContext : IdentityDbContext, IRepoContext
+    public class RepoContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IRepoContext
     {
         public RepoContext(DbContextOptions<RepoContext> options) : base(options) { }
 
-        public virtual DbSet<CardDto> Card { get; set; }
-        public virtual DbSet<Deck> Deck { get; set; }
+        public virtual DbSet<Card> Cards { get; set; }
+        public virtual DbSet<Deck> Decks { get; set; }
         public virtual DbSet<DeckCards> DeckCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            const string ADMIN_ID = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
+            const string adminId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
             base.OnModelCreating(builder);
 
-            var user = new IdentityUser
+            builder.Entity<DeckCards>()
+                .HasKey(m => new {m.DeckId, m.CardId});
+            builder.Entity<DeckCards>()
+                .HasOne(m => m.Deck)
+                .WithMany(m => m.DeckCards)
+                .HasForeignKey(m => m.DeckId);
+            builder.Entity<DeckCards>()
+                .HasOne(m => m.Card)
+                .WithMany(m => m.DeckCards)
+                .HasForeignKey(m => m.CardId);
+            
+            var user = new AppUser
             {
-                Id = ADMIN_ID,
+                Id = Guid.Parse(adminId),
                 UserName = "TestUser",
                 NormalizedUserName = "TESTUSER",
                 Email = "test@test.test",
                 NormalizedEmail = "TEST@TEST.TEST",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                
             };
-
-            var deck = new Deck
-            {
-                Id=  1,
-                Title = "Test Deck",
-                UserID = new Guid(ADMIN_ID),
-            };
-
-            PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+            
+            var passwordHasher = new PasswordHasher<AppUser>();
             passwordHasher.HashPassword(user, "Test.1234");
-
-            builder.Entity<IdentityUser>().HasData(user);
-            builder.Entity<Deck>().HasData(deck);
+            
+            builder.Entity<AppUser>().HasData(user);
         }
     }
 
@@ -51,7 +56,7 @@ namespace MTGCore.Repository
     {
         public RepoContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(@Directory.GetCurrentDirectory() + "/../MTGCore/appsettings.json")
                 .Build();

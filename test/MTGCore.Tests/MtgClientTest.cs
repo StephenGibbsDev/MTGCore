@@ -1,9 +1,14 @@
+using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
 using RichardSzalay.MockHttp;
 using Shouldly;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Moq.Protected;
 using MTGCore.MtgClient.Api.Services;
 using Xunit;
 
@@ -15,16 +20,22 @@ namespace MTGCore.Tests
         [Fact]
         public async Task returns_a_single_card()
         {
-            var mockHttp = new MockHttpMessageHandler();
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("{\"card\": {\"name\": \"TestyCard\"}}"),
+                });
+            
+            var client = new HttpClient(mockHttpMessageHandler.Object)
+            {
+                BaseAddress = new Uri("https://localhost:44317/v1/")
+            };
 
-            //setup mock test
-            mockHttp.When("https://localhost:44317/v1/*")
-                    .Respond("application/json", "{'card': {'name': 'TestyCard'}}"); // Respond with JSON
-
-            var client = mockHttp.ToHttpClient();
-
-            var mtgservice = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
-            var user = await mtgservice.GetCardByMultiverseId(74208);
+            var mtgHttpClient = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
+            var user = await mtgHttpClient.GetCardByMultiverseId(74208);
 
             user.name.ShouldBe("TestyCard");
         }
@@ -32,16 +43,22 @@ namespace MTGCore.Tests
         [Fact]
         public async Task returns_multiple_card()
         {
-            var mockHttp = new MockHttpMessageHandler();
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("{\"cards\": [{\"name\": \"TestyCard\"},{\"name\": \"secondtesty\"}]}"),
+                });
+            
+            var client = new HttpClient(mockHttpMessageHandler.Object)
+            {
+                BaseAddress = new Uri("https://localhost:44317/v1/")
+            };
 
-            //setup mock test
-            mockHttp.When("https://localhost:44317/v1/*")
-                    .Respond("application/json", "{'cards': [{'name': 'TestyCard'},{'name': 'secondtesty'}]}"); // Respond with JSON
-
-            var client = mockHttp.ToHttpClient();
-
-            var mtgservice = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
-            var user = await mtgservice.GetCardsByPage(1);
+            var mtgService = new MtgHttpClient(client, Mock.Of<ILogger<MtgHttpClient>>());
+            var user = await mtgService.GetCardsByPage(1);
 
             user.Count().ShouldBe(2);
         }

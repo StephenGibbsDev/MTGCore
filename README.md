@@ -25,6 +25,22 @@ If you encounter an issue with the frontend not working as expected and are runn
 
 E.G. In Firefox, the JS Console is handy for viewing frontend errors and you can use the Network tab to check if the front-end is successfully calling the backend - or if an invalid status code is being returned.
 
+**Migrations**
+
+This project is built using a code first approach with EF Core. The classes modelling the DB tables are in `MTGCore.Repository/Models`. Everytime a table model is changed, a migration has to be created and the database updated. These migrations are stored in `MTGCore.Repository/Models` and make it possible to rollback database changes.
+
+You can run a migration either in the VS package manager console or by using the .NET Core CLI. You may have to specify which project the context exists in. The following is how you can create a migration in package manager:
+
+`Add-Migration {MigrationName} -OutputDir {OutputDirectory} -Project {ProjectPath}`
+
+You can update the database from your migrations by using the following command in PM:
+
+`Update-Database`
+
+More information on EF Core code first can be found here: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=vs
+
 **Testing**
 
 You can run front-end unit tests with `npm test:unit`.
+
+Backend unit tests can be run by right clicking on the `MTGCore.Tests` project and selecting `Run Unit Tests`.

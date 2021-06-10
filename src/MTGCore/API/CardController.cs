@@ -14,14 +14,14 @@ namespace MTGCore.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SearchController : ControllerBase
+    public class CardController : ControllerBase
     {
         private MTGService _mtgService;
         private IMapper _mapper;
         private IManaCostConverter _manaCostConverter;
         private ISearchFilterMapper _filterMapper;
 
-        public SearchController(MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter, ISearchFilterMapper filterMapper)
+        public CardController(MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter, ISearchFilterMapper filterMapper)
         {
             _mtgService = mtgservice;
             _mapper = mapper;

@@ -6,6 +6,6 @@ namespace MTGCore.ViewModels
 {
     public class SearchCardViewModel
     {
-        public SearchFilterWithColours SearchFilter { get; set; }
+        public SearchFilter SearchFilter { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using MTGCore.Configuration;
 using MTGCore.Configuration.Interfaces;
 using MTGCore.Repository;
 using MTGCore.Services.Interfaces;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace MTGCore
 {

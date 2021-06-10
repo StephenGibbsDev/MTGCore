@@ -67,11 +67,9 @@ namespace MTGCore.Services
         }
 
         //todo: pass in string instead of dictionary
-        public async Task<List<Card>> GetCardBySearchFilter(Dictionary<string,string> filters)
+        public async Task<List<Card>> GetCardBySearchFilter(string queryString)
         {
-
-            var url = QueryHelpers.AddQueryString("cards", filters);
-            var result = await _client.GetAsync(url);
+            var result = await _client.GetAsync($"cards{queryString}");
 
             if (!result.IsSuccessStatusCode)
                 return default;

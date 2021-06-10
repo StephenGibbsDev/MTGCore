@@ -91,7 +91,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-warning">Clear</button>
-            <button v-on:click="submitFilter" type="button" class="btn btn-primary">Submit</button>
+            <button v-on:click="submitFilter" type="button" class="btn btn-primary">Search</button>
           </div>
         </div>
       </div>

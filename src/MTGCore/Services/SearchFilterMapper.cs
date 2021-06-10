@@ -6,56 +6,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace MTGCore.Services
 {
     public class SearchFilterMapper : ISearchFilterMapper
     {
-        private Dictionary<string, string> filterParameters = new Dictionary<string, string>();
 
-        private Dictionary<Type, Delegate> typeProcessorMap = new Dictionary<Type, Delegate>() 
+        private readonly QueryBuilder _builder = new QueryBuilder();
+
+        public string map(SearchFilter filters) => ParseQueryStringFromObject(filters);
+
+        private void ParseQueryStringFromPropertyInfo(PropertyInfo obj, object parentObj)
         {
-            { typeof(List<string>), new Func<PropertyInfo,SearchFilter,string>((x,y) => {return StringListResolver.ValueToString(x,y);}) },
-            { typeof(string), new Func<PropertyInfo,SearchFilter,string>((x,y) => {return StringResolver.ValueToString(x,y);}) }
-        };
-
-        public Dictionary<string, string> map(SearchFilter filter)
-        {
-
-            var properties = typeof(SearchFilterWithColours).GetProperties().Where(val => val.GetValue(filter,null) != null).ToList();
-
-            foreach (PropertyInfo property in properties)
+            switch (obj.PropertyType)
             {
-                Type type = property.PropertyType;
-
-                var result = typeProcessorMap[type].DynamicInvoke(property, filter);
-
-                var pair = new KeyValuePair<string, string>(property.Name.ToLower(), (string)result);
-
-                if (!string.IsNullOrEmpty(pair.Value))
-                    filterParameters.Add(pair.Key, pair.Value);
+                case var str when str == typeof(string):
+                    _builder.TryAdd(obj.Name, (string)obj.GetValue(parentObj));
+                    break;
+                case var strList when typeof(IEnumerable).IsAssignableFrom(strList):
+                    _builder.TryAdd(obj.Name, (IEnumerable<string>)obj.GetValue(parentObj));
+                    break;
             }
-
-            return filterParameters;
         }
-    }
 
-
-    public class StringResolver 
-    {
-        public static string ValueToString(PropertyInfo property, SearchFilter filter)
+        private string ParseQueryStringFromObject(object obj)
         {
-            return (string)property.GetValue(filter);
+            var propertyInfo = obj.GetType().GetProperties();
+            propertyInfo.OrderBy(x=> x.GetCustomAttribute<FilterAttribute>() == null ? 99 : x.GetCustomAttribute<FilterAttribute>().FieldOrder).ToList().ForEach(m => ParseQueryStringFromPropertyInfo(m, obj));
+            return _builder.ToQueryString().Value;
         }
+
     }
 
-    public class StringListResolver 
-    {
-        public static string ValueToString(PropertyInfo property, SearchFilter filter)
-        {
-            var list = (List<string>)property.GetValue(filter);
-            return String.Join(",", list.Select(x => x.ToString()).ToArray());
-        }
-    }
 }
 

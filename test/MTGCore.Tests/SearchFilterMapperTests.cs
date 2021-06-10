@@ -7,20 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace MTGCore.Tests
 {
     public class SearchFilterMapperTests
     {
         private SearchFilterMapper mapper = new SearchFilterMapper();
-        private SearchFilterWithColours searchFilter = new SearchFilterWithColours()
+        private SearchFilter searchFilter = new SearchFilter()
         {
             Name = "Bomb",
             Type = "Artifact",
             Rarity = "Common",
-            Price = "100",
             Set = null,
             Colours = new List<string>() {"B","C","U"}
+        };
+
+        private SearchFilter searchFilterColoursNull = new SearchFilter()
+        {
+            Name = "Angel",
+            Type = null,
+            Rarity = null,
+            Set = null,
+            Colours = null
         };
 
 
@@ -28,25 +37,17 @@ namespace MTGCore.Tests
         public void returns_list_of_query_string_Parameters()
         {
 
-            Dictionary<string,string> queryStringList = mapper.map(searchFilter);
+            var queryString = mapper.map(searchFilter);
 
-
-            var name = queryStringList.Where(x => x.Key == "name").Single();
-            name.Value.ShouldBe("Bomb");
-
-
-            var type = queryStringList.Where(x => x.Key == "type").Single();
-            type.Value.ShouldBe("Artifact");
+            queryString.ShouldBe("?name=Bomb&type=Artifact&rarity=Common&colours=B,C,U");
         }
 
         [Fact]
-        public void returns_CSV()
+        public void returns_null_Colours()
         {
+            var queryString = mapper.map(searchFilterColoursNull);
 
-            var queryStringList = mapper.map(searchFilter);
-
-            var csv = queryStringList.Where(x => x.Key == "colours").Single();
-            csv.Value.ShouldBe("B,C,U");
+            queryString.ShouldBe("?name=Angel");
         }
 
     }

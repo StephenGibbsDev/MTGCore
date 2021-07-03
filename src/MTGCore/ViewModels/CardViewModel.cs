@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using MTGCore.Dtos.Models;
 using System.Collections.Generic;
 
 namespace MTGCore.ViewModels

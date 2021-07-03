@@ -41,11 +41,11 @@
                       v-on:triggerChange="updateDeckCardList"
                       v-on:addDeck="addNewDeck"
                       v-bind:deckList="Decks"
-                      v-bind:selectedOption="SelectedDeck"/>
+                      v-bind:selectedOption="SelectedDeckId"/>
           </div>
         </div>
         <div class="card-body">
-          <DeckCardList v-bind:deckCards="CardsInDeck"/>
+          <DeckCardList v-on:cardRemoved="removeCardFromDeck" v-bind:deck="CardsInDeck"/>
         </div>
       </div>
     </div>
@@ -69,7 +69,12 @@ interface Data {
   SearchInProgress: boolean,
   CardsInDeck: any,
   Decks: any,
-  SelectedDeck: number | null
+  SelectedDeckId: string | null
+}
+
+interface NewDeck {
+  Title: string,
+  Description: string
 }
 
 export default Vue.extend({
@@ -89,24 +94,24 @@ export default Vue.extend({
       SearchInProgress: false,
       CardsInDeck: null,
       Decks: null,
-      SelectedDeck: null
+      SelectedDeckId: null
     };
   },
   methods: {
-    async addNewDeck(title: string) {
-      const newDeckId = await DeckService.createDeck(title);
-      await this.updateDeckCardList(newDeckId);
+    async addNewDeck(newDeck: NewDeck) {
+      const newCreatedDeck = await DeckService.createDeck(newDeck.Title, newDeck.Description);
+      await this.updateDeckCardList(newCreatedDeck.id);
       await this.updateDeckList();
       // Set textbox val back to empty string
       (this.$refs.deckListRef as any).resetNewDeckName();
     },
     async addToDeck(cardId: string) {
-      if (!this.SelectedDeck) {
+      if (!this.SelectedDeckId) {
         throw new Error("No deck is selected!");
       }
       
-      await DeckService.addCardToDeck(this.SelectedDeck, cardId);
-      await this.updateDeckCardList(this.SelectedDeck);
+      await DeckService.addCardToDeck(this.SelectedDeckId, cardId);
+      await this.updateDeckCardList(this.SelectedDeckId);
     },
     SubmitForm() {
       this.SearchInProgress = true;
@@ -127,16 +132,23 @@ export default Vue.extend({
             this.SearchInProgress = false;
           });
     },
-    async updateDeckCardList(id: number) {
+    async updateDeckCardList(id: string) {
       this.CardsInDeck = await DeckService.getDeckById(id);
-      this.SelectedDeck = id;
+      this.SelectedDeckId = id;
     },
     async updateDeckList() {
       this.Decks = await DeckService.getDecks();
+    },
+    async removeCardFromDeck(cardId: string) {
+      if (!this.SelectedDeckId) {
+        throw new Error("No deck is selected!");
+      }
+      
+      await DeckService.removeCardFromDeck(this.SelectedDeckId, cardId);
     }
   },
-  mounted() {
-    this.updateDeckList();
+  async mounted() {
+    await this.updateDeckList();
     if (this.Decks && this.Decks.length > 0) {
       // TODO(CD): Can probably set their selected deck to the most recently viewed one?
       // Storing it in the local memory may be simplest or in the DB

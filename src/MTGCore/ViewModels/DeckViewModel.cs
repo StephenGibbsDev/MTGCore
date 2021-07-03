@@ -1,5 +1,5 @@
-﻿using MTGCore.Dtos.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MTGCore.Repository.Models;
 
 namespace MTGCore.ViewModels
 {
@@ -10,7 +10,7 @@ namespace MTGCore.ViewModels
 
     public class CardAmt
     {
-        public CardDtoWithSymbols Card { get; set; }
+        public CardWithSymbols Card { get; set; }
         public int Amount { get; set; }
     }
 }

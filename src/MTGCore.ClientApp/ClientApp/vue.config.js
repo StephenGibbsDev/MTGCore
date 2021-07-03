@@ -5,5 +5,8 @@ module.exports = {
     devServer: {
         port: process.env.PORT,
         publicPath: '/'
+    },
+    configureWebpack: {
+        devtool: 'source-map'
     }
 }

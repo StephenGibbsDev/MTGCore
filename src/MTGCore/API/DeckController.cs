@@ -1,106 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MTGCore.Dtos.Models;
-using MTGCore.Repository;
-using MTGCore.Services;
-using MTGCore.Services.Interfaces;
+using MTGCore.Authentication.Identity;
+using MTGCore.Services.Decks;
 using MTGCore.ViewModels;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MTGCore.API
 {
+    // TODO(CD): When auth is implemented, require authentication here
     [Route("api/[controller]")]
     public class DeckController : Controller
     {
-        private readonly IRepoContext _context;
-        private readonly MTGService _mtgService;
-        private readonly IMapper _mapper;
-        private readonly IManaCostConverter _manaCostConverter;
+        private readonly IDeckService _deckService;
 
-        public DeckController(IRepoContext context, MTGService mtgservice, IMapper mapper, IManaCostConverter manaCostConverter)
+        public DeckController(IDeckService deckService)
         {
-            _context = context;
-            _mtgService = mtgservice;
-            _mapper = mapper;
-            _manaCostConverter = manaCostConverter;
+            _deckService = deckService;
         }
-
-        //api/deck/
-        [Route("Add/{deckID}/{cardID}")]
+        
+        [Route("{deckID}/add/{cardID}")]
         [HttpPost]
-        public async Task Post(int deckID, string cardID)
+        public async Task<IActionResult> AddCardToDeck(Guid deckId, Guid cardId)
         {
-            // TODO(CD): Requires refactoring
-            var deckCard = new DeckCards();
-
-            deckCard.CardID = cardID;
-            deckCard.DeckID = deckID;
-
-            // cant make this block async as the _context.deckcards.add rely on a card in the database
-            //insert card into db if it doesnt exist
-            var dbCard = _context.Card.Where(x => x.id == cardID).SingleOrDefault();
-            if (dbCard == null)
-            {
-                var card = await _mtgService.GetCardByID(cardID);
-                var model = _mapper.Map<CardDto>(card);
-
-                _context.Card.Add(model);
-                _context.SaveChanges();
-            };
-
-            //insert into deckcard
-            _context.DeckCards.Add(deckCard);
-            _context.SaveChanges();
-
+            var identity = User.GetIdentity();
+            await _deckService.AddCardToDeck(identity, cardId, deckId);
+            return Ok();
         }
 
         [HttpGet]
-        public List<Deck> Get()
+        public async Task<IActionResult> GetDecks()
         {
-            return _context.Deck.ToList();
+            var identity = User.GetIdentity();
+            var decks = await _deckService.GetAllDecks(identity);
+            return Ok(decks);
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<DeckViewModel> Get(int id)
+        public async Task<IActionResult> GetSingleDeck(Guid id)
         {
-            // TODO(CD): This should probably be moved into a store/repository
-            var list = await _context.DeckCards.Include(x => x.Card).Include(x => x.Deck).Where(x => x.DeckID == id).ToListAsync();
-            var results = list.GroupBy(g => g.CardID);
-            var cardAmt = results.Select(m => new CardAmt { Card = AddManaSymbolsToCard(m.FirstOrDefault()?.Card), Amount = m.Count() });
-            return new DeckViewModel { Cards = cardAmt };
-        }
-
-        private CardDtoWithSymbols AddManaSymbolsToCard(CardDto card)
-        {
-            // TODO(CD): If we move the card stuff into a store/repository, we can then do the mana cost conversion directly in there, saving us from having to do
-            // it everytime we want to retrieve the mana symbols.
-            var cardWithSymbols = _mapper.Map<CardDtoWithSymbols>(card);
-            cardWithSymbols.manaSymbols = _manaCostConverter.Convert(card.manaCost);
-            return cardWithSymbols;
+            var deck = await _deckService.GetDeck(id);
+            return Ok(deck);
         }
 
         [Route("New")]
         [HttpPost]
-        public int? AddNewDeck(string title)
+        public async Task<IActionResult> AddNewDeck([FromBody] NewDeckViewModel newDeck)
         {
-            var deck = _context.Deck.Where(m => m.Title == title).SingleOrDefault();
-
-            if(deck != null)
+            if (!ModelState.IsValid)
             {
-                throw new Exception("Deck with that name already exists!");
+                return BadRequest();
             }
-
-            Deck newDeck = new Deck() { Title = title };
-            _context.Deck.Add(newDeck);
-            _context.SaveChanges();
-            return newDeck.Id;
+            
+            var identity = User.GetIdentity();
+            var deck = await _deckService.AddNewDeck(identity, newDeck.Title, newDeck.Description);
+            return Ok(deck);
+        }
+        
+        [Route("{deckID}/remove/{cardID}")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveCardFromDeck(Guid deckId, Guid cardId)
+        {
+            var identity = User.GetIdentity();
+            await _deckService.RemoveCardFromDeck(identity, cardId, deckId);
+            return Ok();
         }
     }
 }

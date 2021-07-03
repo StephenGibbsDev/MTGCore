@@ -1,6 +1,6 @@
 ﻿using MTGCore.Configuration.Interfaces;
-using MTGCore.Dtos.Enums;
-using MTGCore.Dtos.Models;
+using MTGCore.Repository.Enums;
+using MTGCore.Repository.Models;
 using MTGCore.Services.Exceptions;
 using MTGCore.Services.Interfaces;
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MTGCore.Dtos.Models;
+using MTGCore.Repository.Models;
 
 namespace MTGCore.Services.Interfaces
 {

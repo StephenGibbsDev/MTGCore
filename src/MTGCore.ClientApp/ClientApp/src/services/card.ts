@@ -8,7 +8,6 @@ const CardService = {
     async getCardById(id: number) {
         try {
             const response = await axios.get(`api/Card/${id}`);
-            console.log(response);
             return response.data;
         }
         catch (err) {

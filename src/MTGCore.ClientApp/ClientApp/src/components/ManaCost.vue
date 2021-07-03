@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mana-symbol-container">
         <span v-for="(symbol, index) in manaSymbols" :key="index">
             <img :src="loadImage(symbol.imageName)" v-bind:width="size" v-bind:height="size" alt="Mana Symbol" />
         </span>
@@ -26,3 +26,9 @@
       }
     };
 </script>
+
+<style scoped>
+.mana-symbol-container {
+  display: flex;
+}
+</style>

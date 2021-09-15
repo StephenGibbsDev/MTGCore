@@ -31,7 +31,7 @@
           <CardList v-on:addCardToDeck="addToDeck" v-bind:card="SearchedCards"/>
         </div>
       </div>
-      <div style="flex-grow: 1;">
+      <div class="overflow-y-auto" style="flex-grow: 1;">
         <div class="form-group search-container md" style="display: flex;">
           <div style="flex-grow: 1;">
             
@@ -44,7 +44,7 @@
                       v-bind:selectedOption="SelectedDeckId"/>
           </div>
         </div>
-        <div class="card-body">
+        <div style="height: 100%; position: relative;">
           <DeckCardList v-on:cardRemoved="removeCardFromDeck" v-bind:deck="CardsInDeck"/>
         </div>
       </div>
@@ -163,7 +163,9 @@ export default Vue.extend({
   margin: 0;
   padding: 10px;
   box-shadow: 0px 3px 1px 0px rgb(222, 226, 230);
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1;
+  background: white;
 }
 </style>

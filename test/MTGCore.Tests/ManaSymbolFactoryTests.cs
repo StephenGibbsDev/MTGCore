@@ -1,6 +1,6 @@
 ﻿using Moq;
 using MTGCore.Configuration.Interfaces;
-using MTGCore.Dtos.Enums;
+using MTGCore.Repository.Enums;
 using MTGCore.Services;
 using MTGCore.Services.Exceptions;
 using Shouldly;

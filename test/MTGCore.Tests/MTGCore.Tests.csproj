@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MTGCore.Repository\MTGCore.Repository.csproj" />
     <ProjectReference Include="..\..\src\MTGCore\MTGCore.csproj" />
   </ItemGroup>
 

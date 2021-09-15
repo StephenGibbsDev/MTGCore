@@ -2,7 +2,7 @@
 using MTGCore.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using MTGCore.Dtos.Models;
+using MTGCore.Repository.Models;
 
 namespace MTGCore.Services
 {
